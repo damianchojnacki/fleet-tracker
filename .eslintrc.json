@@ -1,7 +1,18 @@
 {
-    "extends": "next/core-web-vitals",
+    "extends": ["next/core-web-vitals"],
+    "plugins": ["testing-library"],
     "rules": {
         "react-hooks/exhaustive-deps": "off",
         "react/no-unescaped-entities": "off"
-    }
+    },
+    "overrides": [
+        // Only uses Testing Library lint rules in test files
+        {
+            "files": [
+                "**/tests/**/*.[jt]s?(x)",
+                "**/?(*.)+(spec|test).[jt]s?(x)"
+            ],
+            "extends": ["plugin:testing-library/react"]
+        }
+    ]
 }
