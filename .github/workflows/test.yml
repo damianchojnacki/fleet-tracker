@@ -16,6 +16,7 @@ jobs:
           - 9000:9000
         env:
           APP_URL: ${{ env.NEXT_PUBLIC_API_URL }}
+          APP_KEY: base64:lviwzEAdX0fsE0AYa3IbWmjsraNL9Gw7y8xUDF44u6U=
           APP_ENV: local
           APP_DEBUG: true
           DB_CONNECTION: mysql
