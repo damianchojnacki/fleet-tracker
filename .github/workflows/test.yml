@@ -45,7 +45,7 @@ jobs:
       - name: Check api
         run: |
           docker ps
-          docker logs nginx -f --until=5s
+          sleep 3
           curl -f ${{ env.NEXT_PUBLIC_API_URL }} || exit 1
 #      - uses: pnpm/action-setup@v2
 #        with:
