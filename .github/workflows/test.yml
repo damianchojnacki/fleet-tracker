@@ -83,9 +83,8 @@ jobs:
       - name: Unit and integration tests
         run: pnpm test:ci
       - name: Cypress run
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
-          build: false
           start: pnpm dev
           wait-on: 'http://localhost:3000'
           browser: chrome
