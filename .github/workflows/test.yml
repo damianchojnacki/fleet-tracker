@@ -43,41 +43,38 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Setup API
+        run: |
+          CONTAINER_ID=$(docker ps --filter "ancestor=fleet-tracker-api" --format "{{.ID}}")
+          docker exec $CONTAINER_ID bash -c "php artisan migrate --seed"
       - name: Setup nginx
         run: docker run -d --net host -p 80:80 -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/conf.d/default.conf nginx:stable-alpine
-      - name: Sleep for 3 seconds
-        uses: jakejarvis/wait-action@master
+      - uses: pnpm/action-setup@v2
         with:
-          time: '3s'
-      - name: Check api
-        run: |
-          curl ${{ env.NEXT_PUBLIC_API_URL }}
-#      - uses: pnpm/action-setup@v2
-#        with:
-#          version: 8
-#      - name: Use Node.js ${{ matrix.node-version }}
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: ${{ matrix.node-version }}
-#          cache: 'pnpm'
-#      - name: Restore cache
-#        uses: actions/cache@v3
-#        with:
-#          path: |
-#            .next/cache
-#            .cache/Cypress
-#          # Generate a new cache whenever packages or source files change.
-#          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-#          # If source files changed but packages didn't, rebuild from a prior cache.
-#          restore-keys: |
-#            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.json') }}-
-#      - name: Install dependencies
-#        run: pnpm install
-#      - name: Unit and integration tests
-#        run: pnpm test:ci
-#      - name: Cypress run
-#        uses: cypress-io/github-action@v5
-#        with:
-#          build: pnpm build
-#          start: pnpm start
-#          browser: chrome
+          version: 8
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            .next/cache
+            .cache/Cypress
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.json') }}-
+      - name: Install dependencies
+        run: pnpm install
+      - name: Unit and integration tests
+        run: pnpm test:ci
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          build: pnpm build
+          start: pnpm start
+          browser: chrome
