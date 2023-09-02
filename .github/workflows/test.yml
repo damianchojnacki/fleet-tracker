@@ -14,11 +14,11 @@ jobs:
         image: trafex/php-nginx:3.3.0
         ports:
           - '80:80'
-        options: >-
-          --health-cmd="curl -f http://localhost/ || exit 1"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
+#        options: >-
+#          --health-cmd="curl -f http://localhost/ || exit 1"
+#          --health-interval=10s
+#          --health-timeout=5s
+#          --health-retries=3
       laravel:
         image: daamian3/fleet-tracker:latest
         ports:
