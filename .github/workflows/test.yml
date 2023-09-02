@@ -4,7 +4,7 @@ on:
   push:
     branches: ["main"]
 env:
-  NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+  NEXT_PUBLIC_API_URL: http://localhost
 jobs:
   # Build job
   test:
@@ -24,7 +24,7 @@ jobs:
         ports:
           - '9000:9000'
         env:
-          APP_URL: "http://localhost"
+          APP_URL: ${{ env.NEXT_PUBLIC_API_URL }}
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
           DB_USERNAME: root
@@ -49,12 +49,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Check api
+        run: |
+          curl -f ${{ env.NEXT_PUBLIC_API_URL }} || exit 1
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - name: Check api
-        run: |
-          curl -f ${{ vars.NEXT_PUBLIC_API_URL }} || exit 1
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
