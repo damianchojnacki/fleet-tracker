@@ -13,7 +13,7 @@ jobs:
       laravel:
         image: daamian3/fleet-tracker:latest
         ports:
-          - '9000:9000'
+          - 9000:9000
         env:
           APP_URL: ${{ env.NEXT_PUBLIC_API_URL }}
           DB_CONNECTION: mysql
@@ -44,7 +44,7 @@ jobs:
         run: docker run -d -p 80:80 -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/nginx.conf nginx:stable-alpine
       - name: Check api
         run: |
-          curl -f --retry 3 --connect-timeout 1 --retry-delay 1 ${{ env.NEXT_PUBLIC_API_URL }} || exit 1
+          curl -f --retry 3 --connect-timeout 1 --retry-delay 1 ${{ env.NEXT_PUBLIC_API_URL }}
 #      - uses: pnpm/action-setup@v2
 #        with:
 #          version: 8
