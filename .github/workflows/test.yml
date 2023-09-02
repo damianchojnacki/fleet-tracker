@@ -20,7 +20,7 @@ jobs:
           APP_ENV: local
           APP_DEBUG: true
           DB_CONNECTION: mysql
-          DB_HOST: 127.0.0.1
+          DB_HOST: mariadb
           DB_USERNAME: root
           DB_DATABASE: testing
           DB_PASSWORD: ''
@@ -28,7 +28,6 @@ jobs:
           BROADCAST_DRIVER: log
           QUEUE_CONNECTION: sync
           TELESCOPE_ENABLED: false
-        options: --net host
       mariadb:
         image: mariadb:10
         env:
@@ -49,7 +48,16 @@ jobs:
           CONTAINER_ID=$(docker ps --filter "ancestor=daamian3/fleet-tracker:latest" --format "{{.ID}}")
           docker exec $CONTAINER_ID bash -c "php artisan migrate --seed"
       - name: Setup Nginx
-        run: docker run -d --net host -p 80:80 -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/conf.d/default.conf nginx:stable-alpine
+        run: |
+          docker run \
+            -d \
+            --net host \
+            -p 80:80 \
+            -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/conf.d/default.conf nginx:stable-alpine \
+            --health-cmd="mysqladmin ping" \
+            --health-interval=10s \
+            --health-timeout=5s \
+            --health-retries=3
       - uses: pnpm/action-setup@v2
         with:
           version: 8
