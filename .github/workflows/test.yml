@@ -13,7 +13,7 @@ jobs:
       nginx:
         image: trafex/php-nginx:3.3.0
         ports:
-          - '80:80'
+          - '80:8080'
 #        options: >-
 #          --health-cmd="curl -f http://localhost/ || exit 1"
 #          --health-interval=10s
@@ -51,7 +51,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Check api
         run: |
-          curl -f http://nginx || exit 1
+          curl -f ${{ env.NEXT_PUBLIC_API_URL }} || exit 1
       - uses: pnpm/action-setup@v2
         with:
           version: 8
