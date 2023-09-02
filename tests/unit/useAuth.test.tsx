@@ -1,6 +1,6 @@
 import {useAuth} from "@/hooks/useAuth"
-import {act, renderHook, waitFor} from "@testing-library/react"
-import axios from "@/lib/axios"
+import {renderHook, waitFor} from "@testing-library/react"
+import * as SWR from 'swr'
 
 jest.mock('next/router', () => ({
     useRouter: jest.fn()
@@ -20,16 +20,18 @@ describe('useAuth', function () {
             email_verified_at: '2023-09-01T16:18:21.719Z',
         };
 
-        const mock = jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: user })
+        jest.spyOn(SWR, 'default').mockImplementationOnce(() => {
+            return {
+                data: user,
+                error: undefined,
+                mutate: jest.fn(),
+                isValidating: false,
+            }
+        });
 
         const { result } = renderHook(() => useAuth())
 
-        await waitFor(() => {
-            expect(mock).toHaveBeenCalledTimes(1)
-        })
-
-        await waitFor(() => {
-            expect(result.current.user).toBe(user)
-        })
+        expect(SWR.default).toHaveBeenCalledTimes(1);
+        expect(result.current.user).toBe(user)
     })
 })

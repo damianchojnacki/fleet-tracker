@@ -37,8 +37,6 @@ jobs:
         run: pnpm install
       - name: Unit and integration tests
         run: pnpm test:ci
-      - name: Unit and integration tests
-        run: pnpm test:ci
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
