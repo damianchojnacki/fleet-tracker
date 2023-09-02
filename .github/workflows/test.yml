@@ -41,7 +41,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup nginx
-        run: docker run -d -p 80:80 -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/nginx.conf nginx:stable-alpine
+        run: docker run -d --net host -p 80:80 -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/conf.d/default.conf nginx:stable-alpine
 #      - name: Sleep for 5 seconds
 #        uses: jakejarvis/wait-action@master
 #        with:
