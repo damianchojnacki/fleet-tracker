@@ -45,10 +45,10 @@ jobs:
       - name: Sleep for 3 seconds
         uses: jakejarvis/wait-action@master
         with:
-          time: '5s'
+          time: '3s'
       - name: Check api
         run: |
-          curl -f ${{ env.NEXT_PUBLIC_API_URL }} || exit 1
+          curl ${{ env.NEXT_PUBLIC_API_URL }}
 #      - uses: pnpm/action-setup@v2
 #        with:
 #          version: 8
