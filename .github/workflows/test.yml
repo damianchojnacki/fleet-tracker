@@ -82,9 +82,18 @@ jobs:
         run: pnpm build
       - name: Unit and integration tests
         run: pnpm test:ci
-      - name: Cypress run
+      - name: E2E tests
         uses: cypress-io/github-action@v6
+        env:
+          DEBUG: '@cypress/github-action'
         with:
+          install: false
           start: pnpm dev
           wait-on: 'http://localhost:3000'
           browser: chrome
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: tests/e2e/screenshots
+          if-no-files-found: ignore
