@@ -41,12 +41,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup nginx
-        run: docker run -d -p 80:80 -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/nginx.conf nginx:stable-alpine
+        run: docker run --name nginx -d -p 80:80 -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/nginx.conf nginx:stable-alpine
       - name: Check api
         run: |
           docker ps
-          docker logs laravel
-          docker logs nginx
+          docker logs nginx -f --until=5s
           curl -f ${{ env.NEXT_PUBLIC_API_URL }} || exit 1
 #      - uses: pnpm/action-setup@v2
 #        with:
