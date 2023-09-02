@@ -16,6 +16,8 @@ jobs:
           - 9000:9000
         env:
           APP_URL: ${{ env.NEXT_PUBLIC_API_URL }}
+          APP_ENV: local
+          APP_DEBUG: true
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
           DB_USERNAME: root
