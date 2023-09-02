@@ -54,7 +54,7 @@ jobs:
             --net host \
             -p 80:80 \
             -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/conf.d/default.conf nginx:stable-alpine \
-            --health-cmd="mysqladmin ping" \
+            --health-cmd="curl -f http://localhost || exit 1" \
             --health-interval=10s \
             --health-timeout=5s \
             --health-retries=3
