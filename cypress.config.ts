@@ -16,5 +16,13 @@ module.exports = defineConfig({
         env: {
             apiUrl: process.env.NEXT_PUBLIC_API_URL,
         },
+        setupNodeEvents(on, config) {
+            on('task', {
+                log(message) {
+                    console.log(message);
+                    return null;
+                },
+            });
+        },
     },
 })

@@ -22,6 +22,8 @@ describe('Login Page Tests', () => {
     })
 
     it('should show an error message for invalid login', () => {
+        cy.task('log', Cypress.env('apiUrl'))
+
         // Type an invalid email and password
         cy.get('input[type="email"]').type('invalid@example.com')
         cy.get('input[type="password"]').type('wrongpassword')
