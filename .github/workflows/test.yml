@@ -28,6 +28,7 @@ jobs:
           BROADCAST_DRIVER: log
           QUEUE_CONNECTION: sync
           TELESCOPE_ENABLED: false
+        options: --net host
       mariadb:
         image: mariadb:10
         env:
