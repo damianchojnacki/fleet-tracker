@@ -83,15 +83,9 @@ jobs:
       - name: Unit and integration tests
         run: pnpm test:ci
       - name: E2E tests
-        uses: cypress-io/github-action@v6
-        env:
-          DEBUG: '@cypress/github-action'
-        with:
-          install: false
-          start: pnpm dev
-          wait-on: 'http://localhost:3000'
-          browser: chrome
-      - uses: actions/upload-artifact@v3
+        run: pnpm test:e2e
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-screenshots
