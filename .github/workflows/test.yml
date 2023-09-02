@@ -10,15 +10,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     services:
-      nginx:
-        image: trafex/php-nginx:3.3.0
-        ports:
-          - '80:8080'
-#        options: >-
-#          --health-cmd="curl -f http://localhost/ || exit 1"
-#          --health-interval=10s
-#          --health-timeout=5s
-#          --health-retries=3
       laravel:
         image: daamian3/fleet-tracker:latest
         ports:
@@ -49,8 +40,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Check docker
-        run: docker ps
+      - name: Setup nginx
+        run: docker run -d -p 80:80 -v .github/workflows/nginx.conf:etc/nginx/nginx.conf nginx:latest-alpine
       - name: Check api
         run: |
           curl -f ${{ env.NEXT_PUBLIC_API_URL }} || exit 1
