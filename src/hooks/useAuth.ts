@@ -33,7 +33,7 @@ export const useAuth = ({
         setErrors([])
 
         axios
-            .post('/register', props)
+            .post('/api/register', props)
             .then(() => mutate())
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -49,7 +49,7 @@ export const useAuth = ({
         setStatus(null)
 
         axios
-            .post('/login', props)
+            .post('/api/login', props)
             .then(() => mutate())
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -65,7 +65,7 @@ export const useAuth = ({
         setStatus(null)
 
         axios
-            .post('/forgot-password', { email })
+            .post('/api/forgot-password', { email })
             .then(response => setStatus(response.data.status))
             .catch(error => {
                 if (error.response.status !== 422) throw error
@@ -81,7 +81,7 @@ export const useAuth = ({
         setStatus(null)
 
         axios
-            .post('/reset-password', { token: router.query.token, ...props })
+            .post('/api/reset-password', { token: router.query.token, ...props })
             .then(response =>
                 router.push('/login?reset=' + btoa(response.data.status)),
             )
@@ -94,13 +94,13 @@ export const useAuth = ({
 
     const resendEmailVerification = ({ setStatus }) => {
         axios
-            .post('/email/verification-notification')
+            .post('/api/email/verification-notification')
             .then(response => setStatus(response.data.status))
     }
 
     const logout = async () => {
         if (!error) {
-            await axios.post('/logout').then(() => mutate())
+            await axios.post('/api/logout').then(() => mutate())
         }
 
         window.location.pathname = '/login'
