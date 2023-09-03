@@ -1,4 +1,4 @@
-name: Deploy to Vercel
+name: deploy
 on:
   workflow_run:
     workflows: [test]
