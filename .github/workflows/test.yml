@@ -50,7 +50,7 @@ jobs:
           docker exec $CONTAINER_ID bash -c "php artisan migrate --seed"
       - name: Setup Nginx
         run: |
-          docker run -d \
+          docker run \
             --net host \
             -p 80:80 \
             -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/conf.d/default.conf nginx:stable-alpine \
