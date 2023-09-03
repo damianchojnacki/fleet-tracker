@@ -88,6 +88,7 @@ jobs:
         run: |
           pnpm test:ci
           COVERAGE="$( cat coverage/coverage-summary.json | jq -r '.total.lines.pct' )"
+          COVERAGE="$( echo "$COVERAGE/1" | bc )"
           echo "coverage=${COVERAGE}" >> $GITHUB_OUTPUT
       - name: Setup API
         run: |
