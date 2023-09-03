@@ -81,6 +81,10 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.json') }}-
       - name: Install dependencies
         run: pnpm install
+      - run: |
+          ls -a
+          ls -a node_modules
+          ls -a node_modules/cypress
       - name: Build app
         run: pnpm build
       - name: Unit and integration tests
