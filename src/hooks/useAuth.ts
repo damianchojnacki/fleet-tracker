@@ -2,11 +2,11 @@ import useSWR from 'swr'
 import axios from '@/lib/axios'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import User from "@/types/User"
-import RegisterPayload from "@/types/RegisterPayload"
-import LoginPayload from "@/types/LoginPayload"
-import ForgotPasswordPayload from "@/types/ForgotPasswordPayload"
-import ResetPasswordPayload from "@/types/ResetPasswordPayload"
+import User from "@/types/Models/User"
+import RegisterPayload from "@/types/Payloads/RegisterPayload"
+import LoginPayload from "@/types/Payloads/LoginPayload"
+import ForgotPasswordPayload from "@/types/Payloads/ForgotPasswordPayload"
+import ResetPasswordPayload from "@/types/Payloads/ResetPasswordPayload"
 
 export interface useAuthProps {
     middleware?: 'guest' | 'auth'
