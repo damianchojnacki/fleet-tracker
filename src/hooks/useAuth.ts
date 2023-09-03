@@ -2,6 +2,11 @@ import useSWR from 'swr'
 import axios from '@/lib/axios'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import User from "@/types/User"
+import RegisterPayload from "@/types/RegisterPayload"
+import LoginPayload from "@/types/LoginPayload"
+import ForgotPasswordPayload from "@/types/ForgotPasswordPayload"
+import ResetPasswordPayload from "@/types/ResetPasswordPayload"
 
 export interface useAuthProps {
     middleware?: 'guest' | 'auth'
@@ -16,7 +21,7 @@ export const useAuth = ({
 
     const { data: user, error, mutate } = useSWR('/api/user', () =>
         axios
-            .get('/api/user')
+            .get<User>('/api/user')
             .then(res => res.data)
             .catch(error => {
                 if (error.response.status !== 409) throw error
@@ -27,7 +32,9 @@ export const useAuth = ({
 
     const csrf = () => axios.get('/sanctum/csrf-cookie')
 
-    const register = async ({ setErrors, ...props }) => {
+    type setErrors = { setErrors: (errors: any[]) => void }
+
+    const register = async ({ setErrors, ...props }: RegisterPayload & setErrors) => {
         await csrf()
 
         setErrors([])
@@ -42,7 +49,9 @@ export const useAuth = ({
             })
     }
 
-    const login = async ({ setErrors, setStatus, ...props }) => {
+    type setStatus = { setStatus: (status: any) => void }
+
+    const login = async ({ setErrors, setStatus, ...props }: LoginPayload & setErrors & setStatus) => {
         await csrf()
 
         setErrors([])
@@ -58,7 +67,7 @@ export const useAuth = ({
             })
     }
 
-    const forgotPassword = async ({ setErrors, setStatus, email }) => {
+    const forgotPassword = async ({ setErrors, setStatus, email }: ForgotPasswordPayload & setErrors & setStatus) => {
         await csrf()
 
         setErrors([])
@@ -74,7 +83,7 @@ export const useAuth = ({
             })
     }
 
-    const resetPassword = async ({ setErrors, setStatus, ...props }) => {
+    const resetPassword = async ({ setErrors, setStatus, ...props }: ResetPasswordPayload & setErrors & setStatus) => {
         await csrf()
 
         setErrors([])
@@ -92,7 +101,7 @@ export const useAuth = ({
             })
     }
 
-    const resendEmailVerification = ({ setStatus }) => {
+    const resendEmailVerification = ({ setStatus }: setStatus) => {
         axios
             .post('/api/email/verification-notification')
             .then(response => setStatus(response.data.status))

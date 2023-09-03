@@ -15,7 +15,8 @@ const Register = () => {
         redirectIfAuthenticated: '/dashboard',
     })
 
-    const [name, setName] = useState('')
+    const [firstname, setFirstname] = useState('')
+    const [lastname, setLastname] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
@@ -25,7 +26,8 @@ const Register = () => {
         event.preventDefault()
 
         register({
-            name,
+            firstname,
+            lastname,
             email,
             password,
             password_confirmation: passwordConfirmation,
@@ -42,16 +44,33 @@ const Register = () => {
                     </Link>
                 }>
                 <form onSubmit={submitForm}>
-                    {/* Name */}
+                    {/* Firstname */}
                     <div>
-                        <Label htmlFor="name">Name</Label>
+                        <Label htmlFor="firstname">Firstname</Label>
 
                         <Input
-                            id="name"
+                            id="firstname"
                             type="text"
-                            value={name}
+                            value={firstname}
                             className="block mt-1 w-full"
-                            onChange={event => setName(event.target.value)}
+                            onChange={event => setFirstname(event.target.value)}
+                            required
+                            autoFocus
+                        />
+
+                        <InputError messages={errors.name} className="mt-2" />
+                    </div>
+
+                    {/* Lastname */}
+                    <div>
+                        <Label htmlFor="lastname">Lastname</Label>
+
+                        <Input
+                            id="lastname"
+                            type="text"
+                            value={lastname}
+                            className="block mt-1 w-full"
+                            onChange={event => setLastname(event.target.value)}
                             required
                             autoFocus
                         />
