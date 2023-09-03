@@ -127,16 +127,16 @@ jobs:
         uses: emibcn/badge-action@v2.0.2
         with:
           label: 'Code coverage'
-          status: ${{ needs.unit.outputs.coverage }}%
+          status: ${{ needs.test.outputs.coverage }}%
           color: ${{
-            needs.unit.outputs.coverage > 90 && 'green'              ||
-            needs.unit.outputs.coverage > 80 && 'yellow'             ||
-            needs.unit.outputs.coverage > 70 && 'orange'             ||
+            needs.test.outputs.coverage > 90 && 'green'              ||
+            needs.test.outputs.coverage > 80 && 'yellow'             ||
+            needs.test.outputs.coverage > 70 && 'orange'             ||
             'red' }}
           path: badges/coverage.svg
       - name: Push badge
         env:
-          BRANCH: ${{ needs.unit.outputs.branch }}
+          BRANCH: ${{ needs.test.outputs.branch }}
         working-directory: ./badges
         run: |
           git config user.name github-actions[bot]
