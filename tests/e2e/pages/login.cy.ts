@@ -24,14 +24,6 @@ describe('Login Page Tests', () => {
     })
 
     it('should show an error message for invalid login', () => {
-        cy.intercept('*', (request) => {
-            request.continue(response => {
-                if(response.statusMessage !== "OK") {
-                    cy.log(response)
-                }
-            })
-        })
-
         // Type an invalid email and password
         cy.get('input[type="email"]').type('invalid@example.com')
         cy.get('input[type="password"]').type('wrongpassword')
