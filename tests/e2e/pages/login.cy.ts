@@ -1,3 +1,5 @@
+import axios from "axios"
+
 describe('Login Page Tests', () => {
     beforeEach(() => {
         // Visit the login page before each test
@@ -22,7 +24,13 @@ describe('Login Page Tests', () => {
     })
 
     it('should show an error message for invalid login', () => {
-        cy.task('log', Cypress.env('apiUrl'))
+        cy.intercept('*', (request) => {
+            request.continue(response => {
+                if(response.statusMessage !== "OK") {
+                    cy.log(response)
+                }
+            })
+        })
 
         // Type an invalid email and password
         cy.get('input[type="email"]').type('invalid@example.com')
