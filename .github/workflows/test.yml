@@ -80,7 +80,8 @@ jobs:
         with:
           install: false
           start: |
-            pnpm dev, docker run -d \
+            pnpm dev
+            docker run -d \
                --net host \
                -p 80:80 \
                -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/conf.d/default.conf nginx:stable-alpine \
