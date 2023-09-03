@@ -120,7 +120,7 @@ jobs:
           path: tests/e2e/screenshots
           if-no-files-found: ignore
   badge:
-    needs: unit
+    needs: test
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
