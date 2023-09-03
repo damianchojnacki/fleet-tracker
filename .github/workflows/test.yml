@@ -41,9 +41,25 @@ jobs:
     strategy:
       matrix:
         node-version: [18]
+    outputs:
+      branch: ${{ steps.extract_branch.outputs.branch }}
+      coverage: ${{ steps.execute_tests.outputs.coverage }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Extract branch name
+        id: extract_branch
+        run: |
+          TMP_PULL_HEAD_REF="${{ github.head_ref }}"
+          TMP_GITHUB_REF="${GITHUB_REF#refs/heads/}"
+          EXPORT_VALUE=""
+          if [ "${TMP_PULL_HEAD_REF}" != "" ]
+          then
+              EXPORT_VALUE="${TMP_PULL_HEAD_REF}"
+          else
+              EXPORT_VALUE="${TMP_GITHUB_REF}"
+          fi
+          echo "branch=${EXPORT_VALUE}" >> $GITHUB_OUTPUT
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -68,7 +84,10 @@ jobs:
       - name: Build app
         run: pnpm build
       - name: Unit and integration tests
-        run: pnpm test:ci
+        run: |
+          pnpm test:ci
+          COVERAGE="$( cat coverage/coverage-summary.json | jq -r '.total.lines.pct' )"
+          echo "coverage=${COVERAGE}" >> $GITHUB_OUTPUT
       - name: Setup API
         run: |
           CONTAINER_ID=$(docker ps --filter "ancestor=daamian3/fleet-tracker:latest" --format "{{.ID}}")
@@ -96,3 +115,36 @@ jobs:
           name: cypress-screenshots
           path: tests/e2e/screenshots
           if-no-files-found: ignore
+  badge:
+    needs: unit
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: badges
+          path: badges
+      - name: Generate the coverage badge
+        uses: emibcn/badge-action@v2.0.2
+        with:
+          label: 'Code coverage'
+          status: ${{ needs.unit.outputs.coverage }}%
+          color: ${{
+            needs.unit.outputs.coverage > 90 && 'green'              ||
+            needs.unit.outputs.coverage > 80 && 'yellow'             ||
+            needs.unit.outputs.coverage > 70 && 'orange'             ||
+            'red' }}
+          path: badges/coverage.svg
+      - name: Push badge
+        env:
+          BRANCH: ${{ needs.unit.outputs.branch }}
+        working-directory: ./badges
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+          mkdir -p "${BRANCH}"
+
+          mv coverage.svg "${BRANCH}"
+          git add "${BRANCH}/coverage.svg"
+
+          git commit --author "damianchojnacki <damianchojnacki@users.noreply.github.com>" -m "Add/Update badge [skip ci]" || true
+          git push
