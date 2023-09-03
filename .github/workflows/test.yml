@@ -44,19 +44,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup API
-        run: |
-          CONTAINER_ID=$(docker ps --filter "ancestor=daamian3/fleet-tracker:latest" --format "{{.ID}}")
-          docker exec $CONTAINER_ID bash -c "php artisan migrate --seed"
-      - name: Setup Nginx
-        run: |
-          docker run --net host \
-            -p 80:80 \
-            -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/conf.d/default.conf nginx:stable-alpine \
-            --health-cmd="curl -f http://localhost || exit 1" \
-            --health-interval=10s \
-            --health-timeout=5s \
-            --health-retries=3
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -82,14 +69,26 @@ jobs:
         run: pnpm build
       - name: Unit and integration tests
         run: pnpm test:ci
+      - name: Setup API
+        run: |
+          CONTAINER_ID=$(docker ps --filter "ancestor=daamian3/fleet-tracker:latest" --format "{{.ID}}")
+          docker exec $CONTAINER_ID bash -c "php artisan migrate --seed"
       - name: E2E tests
         uses: cypress-io/github-action@v6
         env:
           DEBUG: '@cypress/github-action'
         with:
           install: false
-          start: pnpm dev
-          wait-on: 'http://localhost:3000'
+          start: |
+            pnpm dev, docker run -d \
+               --net host \
+               -p 80:80 \
+               -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/conf.d/default.conf nginx:stable-alpine \
+               --health-cmd="curl -f http://localhost || exit 1" \
+               --health-interval=10s \
+               --health-timeout=5s \
+               --health-retries=3
+          wait-on: 'http://localhost, http://localhost:3000'
           browser: chrome
       - name: Show API logs in case of tests failure
         if: failure()
