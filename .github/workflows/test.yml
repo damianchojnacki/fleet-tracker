@@ -81,7 +81,7 @@ jobs:
           install: false
           start: |
             pnpm dev
-            docker run -d --net host -p 80:80 -v $(pwd)/.github/workflows/nginx.conf:/etc/nginx/conf.d/default.conf nginx:stable-alpine
+            docker run -d --net host -p 80:80 -v ${{ github.workspace }}/.github/workflows/nginx.conf:/etc/nginx/conf.d/default.conf nginx:stable-alpine
           wait-on: 'http://localhost, http://localhost:3000'
           browser: chrome
       - name: Show API logs in case of tests failure
