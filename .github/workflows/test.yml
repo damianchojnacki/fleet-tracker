@@ -84,6 +84,7 @@ jobs:
       - name: Build app
         run: pnpm build
       - name: Unit and integration tests
+        id: execute_tests
         run: |
           pnpm test:ci
           COVERAGE="$( cat coverage/coverage-summary.json | jq -r '.total.lines.pct' )"
