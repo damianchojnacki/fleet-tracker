@@ -2,23 +2,42 @@ import { LoginResponse } from './index'
 
 Cypress.Commands.add('login', () => {
     return cy
-        .request<LoginResponse>({
-            method: 'POST',
-            url: `${Cypress.env('apiUrl')}/api/login`,
-            body: {
-                email: 'admin@example.com',
-                password: 'password',
-            },
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'Build-Secret': Cypress.env('buildSecret'),
-            },
+        .csrfToken()
+        .then((headers) => {
+            const token = decodeURIComponent(headers['set-cookie'][0].split('=')[1].split(';')[0])
+
+            cy.request({
+                method: 'POST',
+                url: `${Cypress.env('apiUrl')}/api/login`,
+                body: {
+                    email: 'admin@example.com',
+                    password: 'password',
+                },
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Xsrf-Token': token,
+                },
+            })
         })
-        .then((response) => {
-            cy.setCookie('token', response.body.token)
-        })
+
 })
+
+/**
+ * Fetch a CSRF token.
+ *
+ * @example cy.csrfToken();
+ */
+Cypress.Commands.add('csrfToken', () => {
+    return cy
+        .request({
+            method: 'GET',
+            url: `${Cypress.env('apiUrl')}/sanctum/csrf-cookie`,
+            log: false,
+        })
+        .its('headers', { log: false });
+});
+
 
 Cypress.Commands.add('getCy', (value: string) => {
     return cy.get(`[data-cy=${value}]`);

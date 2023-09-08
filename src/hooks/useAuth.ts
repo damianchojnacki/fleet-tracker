@@ -7,6 +7,8 @@ import RegisterPayload from "@/types/Payloads/RegisterPayload"
 import LoginPayload from "@/types/Payloads/LoginPayload"
 import ForgotPasswordPayload from "@/types/Payloads/ForgotPasswordPayload"
 import ResetPasswordPayload from "@/types/Payloads/ResetPasswordPayload"
+import VerifyEmailPayload from "@/types/Payloads/VerifyEmailPayload"
+import {useToast} from "@/components/ui/use-toast"
 
 export interface useAuthProps {
     middleware?: 'guest' | 'auth'
@@ -19,6 +21,8 @@ export const useAuth = ({
 }: useAuthProps = {}) => {
     const router = useRouter()
 
+    const { toast } = useToast()
+
     const { data: user, error, mutate } = useSWR('/api/user', () =>
         axios
             .get<User>('/api/user')
@@ -28,9 +32,26 @@ export const useAuth = ({
 
                 router.push('/verify-email')
             }),
+        {
+            shouldRetryOnError: false,
+        }
     )
 
     const csrf = () => axios.get('/sanctum/csrf-cookie')
+
+    const handleResponseError = (error: any) => {
+        if (error.response.data.message) {
+            toast({
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description: error.response.data.message,
+            })
+
+            return
+        }
+
+        throw error
+    }
 
     type setErrors = { setErrors: (errors: any[]) => void }
 
@@ -51,19 +72,22 @@ export const useAuth = ({
 
     type setStatus = { setStatus: (status: any) => void }
 
-    const login = async ({ setErrors, setStatus, ...props }: LoginPayload & setErrors & setStatus) => {
+    const login = async ({ setErrors, ...props }: LoginPayload & setErrors) => {
         await csrf()
 
         setErrors([])
-        setStatus(null)
 
         axios
             .post('/api/login', props)
             .then(() => mutate())
             .catch(error => {
-                if (error.response.status !== 422) throw error
+                if (error.response.status === 422) {
+                    setErrors(error.response.data.errors)
 
-                setErrors(error.response.data.errors)
+                    return
+                }
+
+                handleResponseError(error)
             })
     }
 
@@ -77,9 +101,13 @@ export const useAuth = ({
             .post('/api/forgot-password', { email })
             .then(response => setStatus(response.data.status))
             .catch(error => {
-                if (error.response.status !== 422) throw error
+                if (error.response.status === 422) {
+                    setErrors(error.response.data.errors)
 
-                setErrors(error.response.data.errors)
+                    return
+                }
+
+                handleResponseError(error)
             })
     }
 
@@ -95,9 +123,13 @@ export const useAuth = ({
                 router.push('/login?reset=' + btoa(response.data.status)),
             )
             .catch(error => {
-                if (error.response.status !== 422) throw error
+                if (error.response.status === 422) {
+                    setErrors(error.response.data.errors)
 
-                setErrors(error.response.data.errors)
+                    return
+                }
+
+                handleResponseError(error)
             })
     }
 
@@ -105,14 +137,30 @@ export const useAuth = ({
         axios
             .post('/api/email/verification-notification')
             .then(response => setStatus(response.data.status))
+            .catch(error => handleResponseError(error))
+    }
+
+    const verifyEmail = ({ id, hash, signature }: VerifyEmailPayload) => {
+        axios
+            .post(`/api/verify-email/${id}/${hash}?signature=${signature}`)
+            .then(response => {
+                router.push('/dashboard')
+
+                toast({
+                    variant: "success",
+                    title: "Oh yeah! That worked.",
+                    description: response.data.status,
+                })
+            })
+            .catch(error => handleResponseError(error))
     }
 
     const logout = async () => {
         if (!error) {
-            await axios.post('/api/logout').then(() => mutate())
+            await axios.delete('/api/logout').then(() => mutate())
         }
 
-        window.location.pathname = '/login'
+        window.location.assign('/login')
     }
 
     useEffect(() => {
@@ -140,6 +188,7 @@ export const useAuth = ({
         forgotPassword,
         resetPassword,
         resendEmailVerification,
+        verifyEmail,
         logout,
     }
 }

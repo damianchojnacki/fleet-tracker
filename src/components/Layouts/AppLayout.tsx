@@ -1,8 +1,18 @@
 import Navigation from '@/components/Layouts/Navigation'
 import {useAuth} from '@/hooks/useAuth'
+import {useEffect} from "react"
+import { useRouter } from 'next/router'
 
 const AppLayout = ({ header, children }) => {
     const { user } = useAuth({ middleware: 'auth' })
+
+    const router = useRouter()
+
+    useEffect(() => {
+        if(user && !user.organization_id){
+            router.push('/associate-organization')
+        }
+    }, [user])
 
     return (
         <div className="min-h-screen bg-gray-100">

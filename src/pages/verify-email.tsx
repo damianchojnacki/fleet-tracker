@@ -1,18 +1,31 @@
 import ApplicationLogo from '@/components/ApplicationLogo'
 import AuthCard from '@/components/AuthCard'
-import Button from '@/components/Button'
+import {Button} from '@/components/ui/button'
 import GuestLayout from '@/components/Layouts/GuestLayout'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
+import {useRouter} from "next/router"
 
 const VerifyEmail = () => {
-    const { logout, resendEmailVerification } = useAuth({
+    const { logout, resendEmailVerification, verifyEmail } = useAuth({
         middleware: 'auth',
         redirectIfAuthenticated: '/dashboard',
     })
 
-    const [status, setStatus] = useState(null)
+    const [status, setStatus] = useState<any>(null)
+
+    const {query} = useRouter()
+
+    useEffect(() => {
+        if(query.id && query.hash && query.signature) {
+            verifyEmail({
+                id: String(query.id),
+                hash: String(query.hash),
+                signature: String(query.signature),
+            })
+        }
+    }, [query])
 
     return (
         <GuestLayout>
@@ -22,6 +35,7 @@ const VerifyEmail = () => {
                         <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
                     </Link>
                 }>
+
                 <div className="mb-4 text-sm text-gray-600">
                     Thanks for signing up! Before getting started, could you
                     verify your email address by clicking on the link we just
@@ -29,18 +43,18 @@ const VerifyEmail = () => {
                     gladly send you another.
                 </div>
 
-                {status === 'verification-link-sent' && (
-                    <div className="mb-4 font-medium text-sm text-green-600">
-                        A new verification link has been sent to the email
-                        address you provided during registration.
-                    </div>
-                )}
-
                 <div className="mt-4 flex items-center justify-between">
-                    <Button
-                        onClick={() => resendEmailVerification({ setStatus })}>
-                        Resend Verification Email
-                    </Button>
+                    {status ? (
+                        <div className="font-medium text-sm text-green-600">
+                            {status}
+                        </div>
+                    ) : (
+                        <Button
+                            onClick={() => resendEmailVerification({ setStatus })}
+                        >
+                            Resend Verification Email
+                        </Button>
+                    )}
 
                     <button
                         type="button"

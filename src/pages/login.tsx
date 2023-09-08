@@ -1,15 +1,16 @@
 import ApplicationLogo from '@/components/ApplicationLogo'
 import AuthCard from '@/components/AuthCard'
-import AuthSessionStatus from '@/components/AuthSessionStatus'
-import Button from '@/components/Button'
+import {Button} from '@/components/ui/button'
 import GuestLayout from '@/components/Layouts/GuestLayout'
-import Input from '@/components/Input'
+import {Input} from '@/components/ui/input'
 import InputError from '@/components/InputError'
-import Label from '@/components/Label'
+import {Label} from '@/components/ui/label'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import {Checkbox} from "@/components/ui/checkbox"
+import {useToast} from "@/components/ui/use-toast"
 
 const Login = () => {
     const router = useRouter()
@@ -23,15 +24,24 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [shouldRemember, setShouldRemember] = useState(false)
     const [errors, setErrors] = useState<any>([])
-    const [status, setStatus] = useState<any>(null)
+
+    const {toast} = useToast()
 
     useEffect(() => {
         if ((router?.query?.reset?.length ?? 0) > 0 && errors.length === 0) {
-            setStatus(atob(String(router.query.reset ?? '')))
-        } else {
-            setStatus(null)
+            const status = (atob(String(router.query.reset ?? '')))
+
+            if(status) {
+                toast({
+                    variant: "success",
+                    title: "Oh yeah! That worked.",
+                    description: status,
+                })
+
+                router.replace('/login')
+            }
         }
-    })
+    }, [router?.query?.reset])
 
     const submitForm = async event => {
         event.preventDefault()
@@ -41,7 +51,6 @@ const Login = () => {
             password,
             remember: shouldRemember,
             setErrors,
-            setStatus,
         })
     }
 
@@ -53,8 +62,6 @@ const Login = () => {
                         <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
                     </Link>
                 }>
-                {/* Session Status */}
-                <AuthSessionStatus className="mb-4" status={status} />
 
                 <form onSubmit={submitForm}>
                     {/* Email Address */}
@@ -94,35 +101,30 @@ const Login = () => {
                         />
                     </div>
 
-                    {/* Remember Me */}
-                    <div className="block mt-4">
-                        <label
-                            htmlFor="remember_me"
-                            className="inline-flex items-center">
-                            <input
+                    <div className="flex items-center justify-end mt-4 flex-wrap">
+                        <div className="flex items-center mb-5 sm:mb-0 mr-auto sm:w-full">
+                            <Checkbox
                                 id="remember_me"
-                                type="checkbox"
                                 name="remember"
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                onChange={event =>
-                                    setShouldRemember(event.target.checked)
-                                }
+                                onChange={() => setShouldRemember(!shouldRemember)}
                             />
 
-                            <span className="ml-2 text-sm text-gray-600">
+                            <Label
+                                htmlFor="remember_me"
+                                className="ml-2 text-sm text-gray-600 cursor-pointer"
+                            >
                                 Remember me
-                            </span>
-                        </label>
-                    </div>
+                            </Label>
+                        </div>
 
-                    <div className="flex items-center justify-end mt-4">
                         <Link
                             href="/forgot-password"
-                            className="underline text-sm text-gray-600 hover:text-gray-900">
+                            className="underline text-sm text-gray-600 hover:text-gray-900 mb-5 sm:mb-0 self-end sm:self-auto"
+                        >
                             Forgot your password?
                         </Link>
 
-                        <Button className="ml-3">Login</Button>
+                        <Button className="sm:ml-3 w-full sm:w-auto">Login</Button>
                     </div>
                 </form>
             </AuthCard>

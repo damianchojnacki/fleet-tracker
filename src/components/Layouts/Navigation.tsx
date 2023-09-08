@@ -5,10 +5,11 @@ import NavLink from '@/components/NavLink'
 import ResponsiveNavLink, {
     ResponsiveNavButton,
 } from '@/components/ResponsiveNavLink'
-import { DropdownButton } from '@/components/DropdownLink'
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import {DropdownMenuItem} from "@/components/ui/dropdown-menu"
+import {Button} from "@/components/ui/button"
 
 const Navigation = ({ user }) => {
     const router = useRouter()
@@ -43,11 +44,9 @@ const Navigation = ({ user }) => {
                     {/* Settings Dropdown */}
                     <div className="hidden sm:flex sm:items-center sm:ml-6">
                         <Dropdown
-                            align="right"
-                            width="48"
                             trigger={
-                                <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none transition duration-150 ease-in-out">
-                                    <div>{user?.name}</div>
+                                <Button variant="ghost">
+                                    <div>{user?.firstname}</div>
 
                                     <div className="ml-1">
                                         <svg
@@ -61,12 +60,12 @@ const Navigation = ({ user }) => {
                                             />
                                         </svg>
                                     </div>
-                                </button>
-                            }>
-                            {/* Authentication */}
-                            <DropdownButton onClick={logout}>
+                                </Button>
+                            }
+                        >
+                            <DropdownMenuItem onClick={logout} className="cursor-pointer">
                                 Logout
-                            </DropdownButton>
+                            </DropdownMenuItem>
                         </Dropdown>
                     </div>
 

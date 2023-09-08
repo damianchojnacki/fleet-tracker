@@ -1,3 +1,5 @@
+import './e2e'
+
 export interface LoginResponse {
     token: string;
 }
@@ -9,11 +11,12 @@ declare global {
              * Custom command to select DOM element by data-cy attribute.
              * @example cy.dataCy('greeting')
              */
-            login(): Chainable<Response<LoginResponse>>;
+            login(): Chainable<{[p: string]: string | string[]}>
+            csrfToken(): Chainable<{[p: string]: string | string[]}>
             getCy(
                 value: string,
-            ): Chainable<JQuery<HTMLElementTagNameMap[keyof HTMLElementTagNameMap]>>;
-            state(name: string): any;
+            ): Chainable<JQuery<HTMLElementTagNameMap[keyof HTMLElementTagNameMap]>>
+            state(name: string): any
         }
     }
 }
