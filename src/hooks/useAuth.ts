@@ -190,5 +190,6 @@ export const useAuth = ({
         resendEmailVerification,
         verifyEmail,
         logout,
+        refresh: mutate,
     }
 }

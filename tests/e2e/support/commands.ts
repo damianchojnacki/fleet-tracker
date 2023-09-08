@@ -1,6 +1,6 @@
 import { LoginResponse } from './index'
 
-Cypress.Commands.add('login', () => {
+Cypress.Commands.add('login', (email = 'user@example.com', password = 'password') => {
     return cy
         .csrfToken()
         .then((headers) => {
@@ -10,8 +10,8 @@ Cypress.Commands.add('login', () => {
                 method: 'POST',
                 url: `${Cypress.env('apiUrl')}/api/login`,
                 body: {
-                    email: 'admin@example.com',
-                    password: 'password',
+                    email,
+                    password,
                 },
                 headers: {
                     Accept: 'application/json',

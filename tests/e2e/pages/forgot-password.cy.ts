@@ -1,4 +1,4 @@
-describe('ForgotPassword Page', () => {
+describe('Forgot Password Page', () => {
     beforeEach(() => {
         cy.visit('/forgot-password'); // Adjust the URL as needed
     });

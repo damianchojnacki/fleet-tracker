@@ -13,9 +13,10 @@ import Organization from "@/lib/api/Organization"
 import {AxiosError} from "axios"
 import {useToast} from "@/components/ui/use-toast"
 import {useRouter} from "next/router"
+import OrganizationInvitation from "@/lib/api/OrganizationInvitation"
 
 const AssociateOrganization = () => {
-    const { user } = useAuth({
+    const { user, refresh, logout } = useAuth({
         middleware: 'auth',
     })
 
@@ -31,13 +32,52 @@ const AssociateOrganization = () => {
         }
     }, [user])
 
+    useEffect(() => {
+        (async () => {
+            if(router.query.id && router.query.signature){
+                try {
+                    await OrganizationInvitation.accept({
+                        id: Number(router.query.id),
+                        signature: String(router.query.signature),
+                    })
+
+                    refresh()
+
+                    toast({
+                        variant: "success",
+                        title: "Oh yeah! That worked.",
+                        description: "Joined organization",
+                    })
+                } catch(error) {
+                    if(error.response?.status === 422){
+                        setErrors(error.response.data.errors)
+
+                        return
+                    }
+
+                    if (error.response?.data?.message) {
+                        toast({
+                            variant: "destructive",
+                            title: "Uh oh! Something went wrong.",
+                            description: error.response.data.message,
+                        })
+
+                        return
+                    }
+
+                    throw error
+                }
+            }
+        })()
+    }, [router.query])
+
     const submitForm = async (event) => {
         event.preventDefault()
 
         try {
             await Organization.create({ name })
 
-            router.push('/dashboard')
+            refresh()
 
             toast({
                 variant: "success",
@@ -97,7 +137,9 @@ const AssociateOrganization = () => {
                         <InputError messages={errors.name} className="mt-2" />
                     </div>
 
-                    <div className="flex items-center justify-end mt-4">
+                    <div className="flex items-center justify-between mt-4">
+                        <Button className="w-full sm:w-auto" variant="secondary" type="button" onClick={() => logout()}>Logout</Button>
+
                         <Button className="w-full sm:w-auto">Create</Button>
                     </div>
                 </form>
