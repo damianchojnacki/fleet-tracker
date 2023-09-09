@@ -9,6 +9,13 @@ import ForgotPasswordPayload from "@/types/Payloads/ForgotPasswordPayload"
 import ResetPasswordPayload from "@/types/Payloads/ResetPasswordPayload"
 import VerifyEmailPayload from "@/types/Payloads/VerifyEmailPayload"
 import {useToast} from "@/components/ui/use-toast"
+import * as Sentry from "@sentry/nextjs";
+import RegisterResponse from "@/types/Responses/RegisterResponse"
+import LoginResponse from "@/types/Responses/LoginResponse"
+import ForgotPasswordResponse from "@/types/Responses/ForgotPasswordResponse"
+import ResetPasswordResponse from "@/types/Responses/ResetPasswordResponse"
+import ResendEmailVerificationResponse from "@/types/Responses/ResendEmailVerificationResponse"
+import VerifyEmailResponse from "@/types/Responses/VerifyEmailResponse"
 
 export interface useAuthProps {
     middleware?: 'guest' | 'auth'
@@ -37,8 +44,6 @@ export const useAuth = ({
         }
     )
 
-    const csrf = () => axios.get('/sanctum/csrf-cookie')
-
     const handleResponseError = (error: any) => {
         if (error.response.data.message) {
             toast({
@@ -56,13 +61,15 @@ export const useAuth = ({
     type setErrors = { setErrors: (errors: any[]) => void }
 
     const register = async ({ setErrors, ...props }: RegisterPayload & setErrors) => {
-        await csrf()
-
         setErrors([])
 
         axios
-            .post('/api/register', props)
-            .then(() => mutate())
+            .post<RegisterResponse>('/api/register', props)
+            .then((res) => {
+                res.data.token && localStorage.setItem('token', res.data.token)
+
+                location.assign('/dashboard')
+            })
             .catch(error => {
                 if (error.response.status !== 422) throw error
 
@@ -73,13 +80,15 @@ export const useAuth = ({
     type setStatus = { setStatus: (status: any) => void }
 
     const login = async ({ setErrors, ...props }: LoginPayload & setErrors) => {
-        await csrf()
-
         setErrors([])
 
         axios
-            .post('/api/login', props)
-            .then(() => mutate())
+            .post<LoginResponse>('/api/login', props)
+            .then((res) => {
+                res.data.token && localStorage.setItem('token', res.data.token)
+
+                location.assign('/dashboard')
+            })
             .catch(error => {
                 if (error.response.status === 422) {
                     setErrors(error.response.data.errors)
@@ -92,13 +101,11 @@ export const useAuth = ({
     }
 
     const forgotPassword = async ({ setErrors, setStatus, email }: ForgotPasswordPayload & setErrors & setStatus) => {
-        await csrf()
-
         setErrors([])
         setStatus(null)
 
         axios
-            .post('/api/forgot-password', { email })
+            .post<ForgotPasswordResponse>('/api/forgot-password', { email })
             .then(response => setStatus(response.data.status))
             .catch(error => {
                 if (error.response.status === 422) {
@@ -112,13 +119,11 @@ export const useAuth = ({
     }
 
     const resetPassword = async ({ setErrors, setStatus, ...props }: ResetPasswordPayload & setErrors & setStatus) => {
-        await csrf()
-
         setErrors([])
         setStatus(null)
 
         axios
-            .post('/api/reset-password', { token: router.query.token, ...props })
+            .post<ResetPasswordResponse>('/api/reset-password', { token: router.query.token, ...props })
             .then(response =>
                 router.push('/login?reset=' + btoa(response.data.status)),
             )
@@ -135,14 +140,14 @@ export const useAuth = ({
 
     const resendEmailVerification = ({ setStatus }: setStatus) => {
         axios
-            .post('/api/email/verification-notification')
+            .post<ResendEmailVerificationResponse>('/api/email/verification-notification')
             .then(response => setStatus(response.data.status))
             .catch(error => handleResponseError(error))
     }
 
     const verifyEmail = ({ id, hash, signature }: VerifyEmailPayload) => {
         axios
-            .post(`/api/verify-email/${id}/${hash}?signature=${signature}`)
+            .post<VerifyEmailResponse>(`/api/verify-email/${id}/${hash}?signature=${signature}`)
             .then(response => {
                 router.push('/dashboard')
 
@@ -157,10 +162,14 @@ export const useAuth = ({
 
     const logout = async () => {
         if (!error) {
-            await axios.delete('/api/logout').then(() => mutate())
+            await axios.delete<{}>('/api/logout').then(() => {
+                localStorage.removeItem('token')
+
+                mutate()
+            })
         }
 
-        window.location.assign('/login')
+        location.assign('/login')
     }
 
     useEffect(() => {

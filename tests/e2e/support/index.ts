@@ -11,8 +11,7 @@ declare global {
              * Custom command to select DOM element by data-cy attribute.
              * @example cy.dataCy('greeting')
              */
-            login(email?: string, password?: string): Chainable<{[p: string]: string | string[]}>
-            csrfToken(): Chainable<{[p: string]: string | string[]}>
+            login(email?: string, password?: string): Chainable<Response<LoginResponse>>
             getCy(
                 value: string,
             ): Chainable<JQuery<HTMLElementTagNameMap[keyof HTMLElementTagNameMap]>>
