@@ -37,3 +37,6 @@ yarn-error.log*
 
 tests/e2e/screenshots
 tests/e2e/videos
+
+# Sentry Auth Token
+.sentryclirc
