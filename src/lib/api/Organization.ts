@@ -1,6 +1,6 @@
-import CreateOrganizationPayload from "@/types/Payloads/CreateOrganizationPayload"
-import axios from "@/lib/axios"
-import {AxiosResponse} from "axios"
+import CreateOrganizationPayload from '@/types/Payloads/CreateOrganizationPayload'
+import axios from '@/lib/axios'
+import { AxiosResponse } from 'axios'
 
 export default class Organization
 {

@@ -1,9 +1,9 @@
 import AuthCard from '@/components/AuthCard'
-import {Meta, StoryObj} from "@storybook/react"
-import ApplicationLogo from "@/components/ApplicationLogo"
-import {Label} from '@/components/ui/label'
-import {Input} from '@/components/ui/input'
-import {Button} from '@/components/ui/button'
+import { Meta, StoryObj } from '@storybook/react'
+import ApplicationLogo from '@/components/ApplicationLogo'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 
 const meta: Meta<typeof AuthCard> = {
     component: AuthCard,
@@ -12,12 +12,12 @@ const meta: Meta<typeof AuthCard> = {
     },
     tags: ['autodocs'],
     argTypes: {
-        logo: {control: 'text'},
-        children: {control: 'text'},
+        logo: { control: 'text' },
+        children: { control: 'text' },
     },
 }
 
-export default meta;
+export default meta
 
 type Story = StoryObj<typeof AuthCard>;
 

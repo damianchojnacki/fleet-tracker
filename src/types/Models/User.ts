@@ -1,4 +1,4 @@
-import Organization from "@/types/Models/Organization"
+import Organization from '@/types/Models/Organization'
 
 export default interface User
 {

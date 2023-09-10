@@ -1,16 +1,17 @@
 import ApplicationLogo from '@/components/ApplicationLogo'
 import AuthCard from '@/components/AuthCard'
-import {Button} from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import GuestLayout from '@/components/Layouts/GuestLayout'
-import {Input} from '@/components/ui/input'
+import { Input } from '@/components/ui/input'
 import InputError from '@/components/InputError'
-import {Label} from '@/components/ui/label'
+import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import {Checkbox} from "@/components/ui/checkbox"
-import {useToast} from "@/components/ui/use-toast"
+import { Checkbox } from '@/components/ui/checkbox'
+import { useToast } from '@/components/ui/use-toast'
+import ErrorBag from '@/types/ErrorBag'
 
 const Login = () => {
     const router = useRouter()
@@ -23,18 +24,18 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [shouldRemember, setShouldRemember] = useState(false)
-    const [errors, setErrors] = useState<any>([])
+    const [errors, setErrors] = useState<ErrorBag>({})
 
-    const {toast} = useToast()
+    const { toast } = useToast()
 
     useEffect(() => {
-        if ((router?.query?.reset?.length ?? 0) > 0 && errors.length === 0) {
+        if ((router?.query?.reset?.length ?? 0) > 0) {
             const status = (atob(String(router.query.reset ?? '')))
 
             if(status) {
                 toast({
-                    variant: "success",
-                    title: "Oh yeah! That worked.",
+                    variant: 'success',
+                    title: 'Oh yeah! That worked.',
                     description: status,
                 })
 
@@ -61,7 +62,8 @@ const Login = () => {
                     <Link href="/">
                         <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
                     </Link>
-                }>
+                }
+            >
 
                 <form onSubmit={submitForm}>
                     {/* Email Address */}

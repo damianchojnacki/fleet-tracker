@@ -1,6 +1,5 @@
-import {render, screen} from "@testing-library/react"
-import Login from "@/pages/login"
-import axios from "axios"
+import { render, screen } from '@testing-library/react'
+import Login from '@/pages/login'
 
 jest.mock('next/router', () => ({
     useRouter: jest.fn()

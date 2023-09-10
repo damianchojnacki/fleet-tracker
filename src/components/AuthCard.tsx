@@ -1,5 +1,5 @@
-import {FC, ReactNode} from "react"
-import {Card, CardContent, CardHeader, CardTitle, CardDescription} from "@/components/ui/card"
+import { FC, ReactNode } from 'react'
+import { Card, CardContent } from '@/components/ui/card'
 
 export interface AuthCardProps {
     logo: ReactNode

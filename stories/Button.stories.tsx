@@ -1,5 +1,5 @@
-import {Button} from '@/components/ui/button'
-import {Meta, StoryObj} from "@storybook/react"
+import { Button } from '@/components/ui/button'
+import { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Button> = {
     component: Button,
@@ -9,7 +9,7 @@ const meta: Meta<typeof Button> = {
     tags: ['autodocs'],
 }
 
-export default meta;
+export default meta
 
 type Story = StoryObj<typeof Button>;
 

@@ -5,6 +5,7 @@ export interface LoginResponse {
 }
 
 declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface Chainable {
             /**
@@ -15,19 +16,18 @@ declare global {
             getCy(
                 value: string,
             ): Chainable<JQuery<HTMLElementTagNameMap[keyof HTMLElementTagNameMap]>>
-            state(name: string): any
         }
     }
 }
 
 export const randomString = (length: number) => {
-    const arr = new Uint8Array((length || 40) / 2);
+    const arr = new Uint8Array((length || 40) / 2)
 
-    window.crypto.getRandomValues(arr);
+    window.crypto.getRandomValues(arr)
 
     function decToHex(dec: number) {
-        return dec.toString(16);
+        return dec.toString(16)
     }
 
-    return Array.from(arr, decToHex).join('');
-};
+    return Array.from(arr, decToHex).join('')
+}

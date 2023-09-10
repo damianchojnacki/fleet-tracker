@@ -16,5 +16,5 @@ Cypress.Commands.add('login', (email = 'user@example.com', password = 'password'
 })
 
 Cypress.Commands.add('getCy', (value: string) => {
-    return cy.get(`[data-cy=${value}]`);
-});
+    return cy.get(`[data-cy=${value}]`)
+})

@@ -1,14 +1,14 @@
 import ApplicationLogo from '@/components/ApplicationLogo'
 import AuthCard from '@/components/AuthCard'
-import {Button} from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import GuestLayout from '@/components/Layouts/GuestLayout'
-import {Input} from '@/components/ui/input'
+import { Input } from '@/components/ui/input'
 import InputError from '@/components/InputError'
-import {Label} from '@/components/ui/label'
+import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { useState } from 'react'
-import {Checkbox} from "@/components/ui/checkbox"
+import ErrorBag from '@/types/ErrorBag'
 
 const Register = () => {
     const { register } = useAuth({
@@ -21,7 +21,7 @@ const Register = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
-    const [errors, setErrors] = useState<any>([])
+    const [errors, setErrors] = useState<ErrorBag>({})
 
     const submitForm = event => {
         event.preventDefault()
@@ -43,7 +43,8 @@ const Register = () => {
                     <Link href="/">
                         <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
                     </Link>
-                }>
+                }
+            >
                 <form onSubmit={submitForm}>
                     {/* Firstname */}
                     <div>
@@ -143,14 +144,13 @@ const Register = () => {
                         />
                     </div>
 
-                    <div className="flex items-center justify-end mt-4">
-
-                    </div>
+                    <div className="flex items-center justify-end mt-4" />
 
                     <div className="flex items-center justify-end mt-4 flex-wrap">
                         <Link
                             href="/login"
-                            className="underline text-sm text-gray-600 hover:text-gray-900 mb-5 sm:mb-0 self-end sm:self-auto">
+                            className="underline text-sm text-gray-600 hover:text-gray-900 mb-5 sm:mb-0 self-end sm:self-auto"
+                        >
                             Already registered?
                         </Link>
 

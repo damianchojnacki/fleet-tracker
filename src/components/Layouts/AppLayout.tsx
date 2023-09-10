@@ -1,6 +1,6 @@
 import Navigation from '@/components/Layouts/Navigation'
-import {useAuth} from '@/hooks/useAuth'
-import {useEffect} from "react"
+import { useAuth } from '@/hooks/useAuth'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 const AppLayout = ({ header, children }) => {

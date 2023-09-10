@@ -1,21 +1,23 @@
 import useSWR from 'swr'
 import axios from '@/lib/axios'
-import { useEffect } from 'react'
+import { Dispatch, SetStateAction, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import User from "@/types/Models/User"
-import RegisterPayload from "@/types/Payloads/RegisterPayload"
-import LoginPayload from "@/types/Payloads/LoginPayload"
-import ForgotPasswordPayload from "@/types/Payloads/ForgotPasswordPayload"
-import ResetPasswordPayload from "@/types/Payloads/ResetPasswordPayload"
-import VerifyEmailPayload from "@/types/Payloads/VerifyEmailPayload"
-import {useToast} from "@/components/ui/use-toast"
-import * as Sentry from "@sentry/nextjs";
-import RegisterResponse from "@/types/Responses/RegisterResponse"
-import LoginResponse from "@/types/Responses/LoginResponse"
-import ForgotPasswordResponse from "@/types/Responses/ForgotPasswordResponse"
-import ResetPasswordResponse from "@/types/Responses/ResetPasswordResponse"
-import ResendEmailVerificationResponse from "@/types/Responses/ResendEmailVerificationResponse"
-import VerifyEmailResponse from "@/types/Responses/VerifyEmailResponse"
+import User from '@/types/Models/User'
+import RegisterPayload from '@/types/Payloads/RegisterPayload'
+import LoginPayload from '@/types/Payloads/LoginPayload'
+import ForgotPasswordPayload from '@/types/Payloads/ForgotPasswordPayload'
+import ResetPasswordPayload from '@/types/Payloads/ResetPasswordPayload'
+import VerifyEmailPayload from '@/types/Payloads/VerifyEmailPayload'
+import { useToast } from '@/components/ui/use-toast'
+import * as Sentry from '@sentry/nextjs'
+import RegisterResponse from '@/types/Responses/RegisterResponse'
+import LoginResponse from '@/types/Responses/LoginResponse'
+import ForgotPasswordResponse from '@/types/Responses/ForgotPasswordResponse'
+import ResetPasswordResponse from '@/types/Responses/ResetPasswordResponse'
+import ResendEmailVerificationResponse from '@/types/Responses/ResendEmailVerificationResponse'
+import VerifyEmailResponse from '@/types/Responses/VerifyEmailResponse'
+import ErrorBag from '@/types/ErrorBag'
+import { AxiosError } from 'axios'
 
 export interface useAuthProps {
     middleware?: 'guest' | 'auth'
@@ -34,7 +36,9 @@ export const useAuth = ({
         axios
             .get<User>('/api/user')
             .then(res => {
-                res.data.id && Sentry.setUser({id: res.data.id})
+                if (res.data.id) {
+                    Sentry.setUser({ id: res.data.id })
+                }
 
                 return res.data
             })
@@ -48,11 +52,11 @@ export const useAuth = ({
         }
     )
 
-    const handleResponseError = (error: any) => {
-        if (error.response.data.message) {
+    const handleResponseError = (error: AxiosError) => {
+        if (error.response?.data?.message) {
             toast({
-                variant: "destructive",
-                title: "Uh oh! Something went wrong.",
+                variant: 'destructive',
+                title: 'Uh oh! Something went wrong.',
                 description: error.response.data.message,
             })
 
@@ -62,15 +66,17 @@ export const useAuth = ({
         throw error
     }
 
-    type setErrors = { setErrors: (errors: any[]) => void }
+    type setErrors = { setErrors: Dispatch<SetStateAction<ErrorBag>> }
 
     const register = async ({ setErrors, ...props }: RegisterPayload & setErrors) => {
-        setErrors([])
+        setErrors({})
 
         axios
             .post<RegisterResponse>('/api/register', props)
             .then((res) => {
-                res.data.token && localStorage.setItem('token', res.data.token)
+                if (res.data.token) {
+                    localStorage.setItem('token', res.data.token)
+                }
 
                 location.assign('/dashboard')
             })
@@ -81,15 +87,17 @@ export const useAuth = ({
             })
     }
 
-    type setStatus = { setStatus: (status: any) => void }
+    type setStatus = { setStatus: Dispatch<SetStateAction<string|null>> }
 
     const login = async ({ setErrors, ...props }: LoginPayload & setErrors) => {
-        setErrors([])
+        setErrors({})
 
         axios
             .post<LoginResponse>('/api/login', props)
             .then((res) => {
-                res.data.token && localStorage.setItem('token', res.data.token)
+                if (res.data.token) {
+                    localStorage.setItem('token', res.data.token)
+                }
 
                 location.assign('/dashboard')
             })
@@ -105,7 +113,7 @@ export const useAuth = ({
     }
 
     const forgotPassword = async ({ setErrors, setStatus, email }: ForgotPasswordPayload & setErrors & setStatus) => {
-        setErrors([])
+        setErrors({})
         setStatus(null)
 
         axios
@@ -123,7 +131,7 @@ export const useAuth = ({
     }
 
     const resetPassword = async ({ setErrors, setStatus, ...props }: ResetPasswordPayload & setErrors & setStatus) => {
-        setErrors([])
+        setErrors({})
         setStatus(null)
 
         axios
@@ -156,8 +164,8 @@ export const useAuth = ({
                 router.push('/dashboard')
 
                 toast({
-                    variant: "success",
-                    title: "Oh yeah! That worked.",
+                    variant: 'success',
+                    title: 'Oh yeah! That worked.',
                     description: response.data.status,
                 })
             })
@@ -166,7 +174,7 @@ export const useAuth = ({
 
     const logout = async () => {
         if (!error) {
-            await axios.delete<{}>('/api/logout').then(() => {
+            await axios.delete<object>('/api/logout').then(() => {
                 localStorage.removeItem('token')
 
                 mutate()

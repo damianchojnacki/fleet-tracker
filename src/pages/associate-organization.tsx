@@ -1,19 +1,18 @@
 import ApplicationLogo from '@/components/ApplicationLogo'
 import AuthCard from '@/components/AuthCard'
-import AuthSessionStatus from '@/components/AuthSessionStatus'
-import {Button} from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import GuestLayout from '@/components/Layouts/GuestLayout'
-import {Input} from '@/components/ui/input'
+import { Input } from '@/components/ui/input'
 import InputError from '@/components/InputError'
-import {Label} from '@/components/ui/label'
+import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
-import {useEffect, useState} from 'react'
-import Organization from "@/lib/api/Organization"
-import {AxiosError} from "axios"
-import {useToast} from "@/components/ui/use-toast"
-import {useRouter} from "next/router"
-import OrganizationInvitation from "@/lib/api/OrganizationInvitation"
+import { useEffect, useState } from 'react'
+import Organization from '@/lib/api/Organization'
+import { useToast } from '@/components/ui/use-toast'
+import { useRouter } from 'next/router'
+import OrganizationInvitation from '@/lib/api/OrganizationInvitation'
+import ErrorBag from '@/types/ErrorBag'
 
 const AssociateOrganization = () => {
     const { user, refresh, logout } = useAuth({
@@ -21,9 +20,9 @@ const AssociateOrganization = () => {
     })
 
     const [name, setName] = useState('')
-    const [errors, setErrors] = useState<any>([])
+    const [errors, setErrors] = useState<ErrorBag>({})
 
-    const {toast} = useToast()
+    const { toast } = useToast()
     const router = useRouter()
 
     useEffect(() => {
@@ -44,9 +43,9 @@ const AssociateOrganization = () => {
                     refresh()
 
                     toast({
-                        variant: "success",
-                        title: "Oh yeah! That worked.",
-                        description: "Joined organization",
+                        variant: 'success',
+                        title: 'Oh yeah! That worked.',
+                        description: 'Joined organization',
                     })
                 } catch(error) {
                     if(error.response?.status === 422){
@@ -57,8 +56,8 @@ const AssociateOrganization = () => {
 
                     if (error.response?.data?.message) {
                         toast({
-                            variant: "destructive",
-                            title: "Uh oh! Something went wrong.",
+                            variant: 'destructive',
+                            title: 'Uh oh! Something went wrong.',
                             description: error.response.data.message,
                         })
 
@@ -80,9 +79,9 @@ const AssociateOrganization = () => {
             refresh()
 
             toast({
-                variant: "success",
-                title: "Oh yeah! That worked.",
-                description: "Organization created",
+                variant: 'success',
+                title: 'Oh yeah! That worked.',
+                description: 'Organization created',
             })
         } catch(error) {
             if(error.response?.status === 422){
@@ -93,8 +92,8 @@ const AssociateOrganization = () => {
 
             if (error.response?.data?.message) {
                 toast({
-                    variant: "destructive",
-                    title: "Uh oh! Something went wrong.",
+                    variant: 'destructive',
+                    title: 'Uh oh! Something went wrong.',
                     description: error.response.data.message,
                 })
 
@@ -112,7 +111,8 @@ const AssociateOrganization = () => {
                     <Link href="/">
                         <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
                     </Link>
-                }>
+                }
+            >
                 <div className="mb-4 text-sm text-gray-600">
                     It looks like you don't have an organization assigned to your account.
                     Please ask your organization administrator to invite you to their organization or

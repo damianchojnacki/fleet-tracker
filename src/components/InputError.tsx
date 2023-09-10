@@ -1,8 +1,8 @@
 import { FC, InputHTMLAttributes } from 'react'
 
 interface InputErrorProps
-    extends Pick<InputHTMLAttributes<HTMLInputElement>, any> {
-    messages?: any | any[]
+    extends Pick<InputHTMLAttributes<HTMLInputElement>, never> {
+    messages?: string[]
     className?: string
 }
 
@@ -13,7 +13,8 @@ const InputError: FC<InputErrorProps> = ({ messages = [], className = '' }) => (
                 {messages.map((message, index) => (
                     <p
                         className={`${className} text-sm text-red-600`}
-                        key={index}>
+                        key={index}
+                    >
                         {message}
                     </p>
                 ))}

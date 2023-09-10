@@ -1,9 +1,9 @@
 import Axios from 'axios'
 
-let token;
+let token
 
 if (typeof window !== 'undefined') {
-    token = localStorage?.getItem('token');
+    token = localStorage?.getItem('token')
 }
 
 const axios = Axios.create({

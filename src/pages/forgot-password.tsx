@@ -1,14 +1,15 @@
 import ApplicationLogo from '@/components/ApplicationLogo'
 import AuthCard from '@/components/AuthCard'
 import AuthSessionStatus from '@/components/AuthSessionStatus'
-import {Button} from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import GuestLayout from '@/components/Layouts/GuestLayout'
-import {Input} from '@/components/ui/input'
+import { Input } from '@/components/ui/input'
 import InputError from '@/components/InputError'
-import {Label} from '@/components/ui/label'
+import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { useState } from 'react'
+import ErrorBag from '@/types/ErrorBag'
 
 const ForgotPassword = () => {
     const { forgotPassword } = useAuth({
@@ -17,8 +18,8 @@ const ForgotPassword = () => {
     })
 
     const [email, setEmail] = useState('')
-    const [errors, setErrors] = useState<any>([])
-    const [status, setStatus] = useState<any>(null)
+    const [errors, setErrors] = useState<ErrorBag>({})
+    const [status, setStatus] = useState<string|null>(null)
 
     const submitForm = event => {
         event.preventDefault()
@@ -33,7 +34,8 @@ const ForgotPassword = () => {
                     <Link href="/">
                         <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
                     </Link>
-                }>
+                }
+            >
                 <div className="mb-4 text-sm text-gray-600">
                     Forgot your password? No problem. Just let us know your
                     email address and we will email you a password reset link

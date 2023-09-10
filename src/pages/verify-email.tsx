@@ -1,11 +1,11 @@
 import ApplicationLogo from '@/components/ApplicationLogo'
 import AuthCard from '@/components/AuthCard'
-import {Button} from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import GuestLayout from '@/components/Layouts/GuestLayout'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
-import {useEffect, useState} from 'react'
-import {useRouter} from "next/router"
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 const VerifyEmail = () => {
     const { logout, resendEmailVerification, verifyEmail } = useAuth({
@@ -13,9 +13,9 @@ const VerifyEmail = () => {
         redirectIfAuthenticated: '/dashboard',
     })
 
-    const [status, setStatus] = useState<any>(null)
+    const [status, setStatus] = useState<string|null>(null)
 
-    const {query} = useRouter()
+    const { query } = useRouter()
 
     useEffect(() => {
         if(query.id && query.hash && query.signature) {
@@ -34,7 +34,8 @@ const VerifyEmail = () => {
                     <Link href="/">
                         <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
                     </Link>
-                }>
+                }
+            >
 
                 <div className="mb-4 text-sm text-gray-600">
                     Thanks for signing up! Before getting started, could you
@@ -59,7 +60,8 @@ const VerifyEmail = () => {
                     <button
                         type="button"
                         className="underline text-sm text-gray-600 hover:text-gray-900"
-                        onClick={logout}>
+                        onClick={logout}
+                    >
                         Logout
                     </button>
                 </div>
