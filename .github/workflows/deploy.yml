@@ -63,7 +63,7 @@ jobs:
           token: NOT_NEEDED
           base: ""
           plugin_pagespeed: yes
-          plugin_pagespeed_detailed: yes
+          plugin_pagespeed_detailed: no
           plugin_pagespeed_url: ${{ vars.URL }}
           output_action: commit
           committer_branch: badges
