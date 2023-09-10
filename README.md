@@ -19,9 +19,11 @@
 <a href="https://github.com/damianchojnacki/fleet-tracker/actions/workflows/test.yml">
 <img src="https://github.com/damianchojnacki/fleet-tracker/raw/badges/main/coverage.svg" alt="Code Coverage">
 </a>
+<br>
+<img src="https://github.com/damianchojnacki/fleet-tracker/raw/badges/page_speed.svg" alt="Page Speed">
 </p>
 
-## About Fleet Tracker API
+## About Fleet Tracker
 
 ## Setup
 
