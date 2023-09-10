@@ -10,6 +10,7 @@ concurrency:
 env:
   VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
   VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -46,7 +47,7 @@ jobs:
       - name: Create Sentry release
         uses: getsentry/action-release@v1
         env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_AUTH_TOKEN: ${{ env.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ vars.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
         with:
@@ -59,6 +60,7 @@ jobs:
         uses: lowlighter/metrics@latest
         with:
           filename: page_speed.svg
+          token: NOT_NEEDED
           base: ""
           plugin_pagespeed: yes
           plugin_pagespeed_detailed: yes
