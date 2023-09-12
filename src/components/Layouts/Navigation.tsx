@@ -7,16 +7,20 @@ import ResponsiveNavLink, {
 } from '@/components/ResponsiveNavLink'
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 
-const Navigation = ({ user }) => {
+const Navigation = () => {
+    const { user, logout } = useAuth({ middleware: 'auth' })
+    const [open, setOpen] = useState(false)
     const router = useRouter()
 
-    const { logout } = useAuth()
-
-    const [open, setOpen] = useState(false)
+    useEffect(() => {
+        if(user && !user.organization_id){
+            router.push('/associate-organization')
+        }
+    }, [user])
 
     return (
         <nav className="bg-white border-b border-gray-100">
@@ -140,7 +144,7 @@ const Navigation = ({ user }) => {
 
                             <div className="ml-3">
                                 <div className="font-medium text-base text-gray-800">
-                                    {user?.name}
+                                    {user?.firstname}
                                 </div>
                                 <div className="font-medium text-sm text-gray-500">
                                     {user?.email}

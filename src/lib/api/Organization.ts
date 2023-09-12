@@ -1,12 +1,12 @@
 import CreateOrganizationPayload from '@/types/Payloads/CreateOrganizationPayload'
 import axios from '@/lib/axios'
-import { AxiosResponse } from 'axios'
+import OrganizationType from '@/types/Models/Organization'
 
 export default class Organization
 {
-    public static create(payload: CreateOrganizationPayload): Promise<Organization|AxiosResponse<Organization>>
+    public static create(payload: CreateOrganizationPayload): Promise<OrganizationType>
     {
-        return axios.post<Organization>('/api/user/organizations', payload)
+        return axios.post<OrganizationType>('/api/user/organizations', payload)
             .then((res) => res.data)
     }
 }

@@ -2,7 +2,7 @@ import useSWR from 'swr'
 import axios from '@/lib/axios'
 import { Dispatch, SetStateAction, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import User from '@/types/Models/User'
+import User from '@/lib/api/User'
 import RegisterPayload from '@/types/Payloads/RegisterPayload'
 import LoginPayload from '@/types/Payloads/LoginPayload'
 import ForgotPasswordPayload from '@/types/Payloads/ForgotPasswordPayload'
@@ -18,6 +18,7 @@ import ResendEmailVerificationResponse from '@/types/Responses/ResendEmailVerifi
 import VerifyEmailResponse from '@/types/Responses/VerifyEmailResponse'
 import ErrorBag from '@/types/ErrorBag'
 import { AxiosError } from 'axios'
+import { deleteCookie, setCookie } from 'cookies-next'
 
 export interface useAuthProps {
     middleware?: 'guest' | 'auth'
@@ -32,18 +33,17 @@ export const useAuth = ({
 
     const { toast } = useToast()
 
-    const { data: user, error, mutate } = useSWR('/api/user', () =>
-        axios
-            .get<User>('/api/user')
-            .then(res => {
-                if (res.data.id) {
-                    Sentry.setUser({ id: res.data.id })
+    const { data: user, error, mutate } = useSWR(User.showPath, () =>
+        User.show()
+            .then((user) => {
+                if (user?.id) {
+                    Sentry.setUser({ id: user.id })
                 }
 
-                return res.data
+                return user
             })
             .catch(error => {
-                if (error.response.status !== 409) throw error
+                if (error.response?.status !== 409) throw error
 
                 router.push('/verify-email')
             }),
@@ -53,12 +53,14 @@ export const useAuth = ({
     )
 
     const handleResponseError = (error: AxiosError) => {
-        if (error.response?.data?.message) {
+        if (error.response?.data?.message || error.message) {
             toast({
                 variant: 'destructive',
                 title: 'Uh oh! Something went wrong.',
-                description: error.response.data.message,
+                description: error.response?.data.message ?? error.message,
             })
+
+            Sentry.captureException(error)
 
             return
         }
@@ -75,13 +77,13 @@ export const useAuth = ({
             .post<RegisterResponse>('/api/register', props)
             .then((res) => {
                 if (res.data.token) {
-                    localStorage.setItem('token', res.data.token)
+                    setCookie('token', res.data.token)
                 }
 
                 location.assign('/dashboard')
             })
             .catch(error => {
-                if (error.response.status !== 422) throw error
+                if (error.response?.status !== 422) throw error
 
                 setErrors(error.response.data.errors)
             })
@@ -96,13 +98,13 @@ export const useAuth = ({
             .post<LoginResponse>('/api/login', props)
             .then((res) => {
                 if (res.data.token) {
-                    localStorage.setItem('token', res.data.token)
+                    setCookie('token', res.data.token)
                 }
 
                 location.assign('/dashboard')
             })
             .catch(error => {
-                if (error.response.status === 422) {
+                if (error.response?.status === 422) {
                     setErrors(error.response.data.errors)
 
                     return
@@ -120,7 +122,7 @@ export const useAuth = ({
             .post<ForgotPasswordResponse>('/api/forgot-password', { email })
             .then(response => setStatus(response.data.status))
             .catch(error => {
-                if (error.response.status === 422) {
+                if (error.response?.status === 422) {
                     setErrors(error.response.data.errors)
 
                     return
@@ -140,7 +142,7 @@ export const useAuth = ({
                 router.push('/login?reset=' + btoa(response.data.status)),
             )
             .catch(error => {
-                if (error.response.status === 422) {
+                if (error.response?.status === 422) {
                     setErrors(error.response.data.errors)
 
                     return
@@ -175,7 +177,7 @@ export const useAuth = ({
     const logout = async () => {
         if (!error) {
             await axios.delete<object>('/api/logout').then(() => {
-                localStorage.removeItem('token')
+                deleteCookie('token')
 
                 mutate()
             })

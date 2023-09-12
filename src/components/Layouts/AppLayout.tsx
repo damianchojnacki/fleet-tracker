@@ -1,33 +1,35 @@
 import Navigation from '@/components/Layouts/Navigation'
-import { useAuth } from '@/hooks/useAuth'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { SWRConfig } from 'swr'
 
-const AppLayout = ({ header, children }) => {
-    const { user } = useAuth({ middleware: 'auth' })
+export interface AppLayoutProps {
+    header: React.ReactNode
+    children: React.ReactNode
+    fallback?: { [key: string]: any }
+}
 
-    const router = useRouter()
-
-    useEffect(() => {
-        if(user && !user.organization_id){
-            router.push('/associate-organization')
-        }
-    }, [user])
-
+const AppLayout = ({ header, children, fallback = {} }: AppLayoutProps) => {
     return (
-        <div className="min-h-screen bg-gray-100">
-            <Navigation user={user} />
+        <SWRConfig
+            value={{
+                fallback,
+                revalidateIfStale: false,
+                revalidateOnFocus: false,
+            }}
+        >
+            <div className="min-h-screen bg-gray-100">
+                <Navigation />
 
-            {/* Page Heading */}
-            <header className="bg-white shadow">
-                <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {header}
-                </div>
-            </header>
+                {/* Page Heading */}
+                <header className="bg-white shadow">
+                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {header}
+                    </div>
+                </header>
 
-            {/* Page Content */}
-            <main>{children}</main>
-        </div>
+                {/* Page Content */}
+                <main>{children}</main>
+            </div>
+        </SWRConfig>
     )
 }
 

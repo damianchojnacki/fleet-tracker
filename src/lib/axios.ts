@@ -1,17 +1,17 @@
 import Axios from 'axios'
+import { getCookie } from 'cookies-next'
 
-let token
+const headers = {
+    'Accept': 'application/json',
+}
 
-if (typeof window !== 'undefined') {
-    token = localStorage?.getItem('token')
+if (typeof window !== 'undefined' && getCookie('token')) {
+    headers['Authorization'] = 'Bearer ' + getCookie('token')
 }
 
 const axios = Axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
-    headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Authorization': 'Bearer ' + token,
-    },
+    headers,
     withCredentials: true,
 })
 

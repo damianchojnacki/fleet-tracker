@@ -1,4 +1,5 @@
 import { LoginResponse } from './index'
+import { setCookie } from 'cookies-next'
 
 Cypress.Commands.add('login', (email = 'user@example.com', password = 'password') => {
     return cy.request<LoginResponse>({
@@ -12,7 +13,7 @@ Cypress.Commands.add('login', (email = 'user@example.com', password = 'password'
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
-    }).then((response) => localStorage.setItem('token', response.body.token))
+    }).then((response) => setCookie('token', response.body.token))
 })
 
 Cypress.Commands.add('getCy', (value: string) => {
