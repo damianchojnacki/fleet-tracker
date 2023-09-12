@@ -3,7 +3,6 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from '@sentry/nextjs'
-import { HttpClient } from '@sentry/integrations'
 
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
@@ -20,17 +19,17 @@ Sentry.init({
   // in development and sample at a lower rate in production
   replaysSessionSampleRate: 0.1,
 
-  // You can remove this option if you're not planning to use the Sentry Session Replay feature:
   integrations: [
-    new Sentry.Replay({
-      // Additional Replay configuration goes in here, for example:
-      maskAllText: false,
-      blockAllMedia: true,
-      networkDetailAllowUrls: [
-          String(process.env.NEXT_PUBLIC_API_URL).split('https://')[1],
-      ]
-    }),
-    new HttpClient()
+    // disabled replay for performance reasons
+    // new Sentry.Replay({
+    //   // Additional Replay configuration goes in here, for example:
+    //   maskAllText: false,
+    //   blockAllMedia: true,
+    //   networkDetailAllowUrls: [
+    //       String(process.env.NEXT_PUBLIC_API_URL).split('https://')[1],
+    //   ]
+    // }),
+    // new HttpClient()
   ],
   sendDefaultPii: true,
 })

@@ -15,7 +15,8 @@ Sentry.init({
   debug: false,
 
     integrations: [
-        new HttpClient()
+        new HttpClient(),
+        new Sentry.Integrations.RequestData(),
     ],
     sendDefaultPii: true,
 })
