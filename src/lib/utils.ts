@@ -16,6 +16,8 @@ export function authorize(req: NextRequest) {
     const { token } = req.cookies
 
     if(!token) {
+        delete axios.defaults.headers.common['Authorization']
+
         return
     }
 

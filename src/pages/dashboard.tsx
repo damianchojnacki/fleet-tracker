@@ -63,6 +63,15 @@ export const getServerSideProps = async ({ req }: GetServerSidePropsContext) => 
             }
         }
 
+        if(error.response?.status === 409) {
+            return {
+                redirect: {
+                    destination: '/verify-email',
+                    permanent: false,
+                },
+            }
+        }
+
         throw error
     }
 }
