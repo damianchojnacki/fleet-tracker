@@ -5,8 +5,9 @@ import Car from '@/lib/api/Car'
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import { authorize } from '@/lib/utils'
 import Welcome from '@/components/Welcome'
+import { dehydrate, QueryClient } from '@tanstack/react-query'
 
-const Dashboard = ({ car, fallback }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Dashboard = ({ car }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     return (
         <AppLayout
             header={
@@ -14,7 +15,6 @@ const Dashboard = ({ car, fallback }: InferGetServerSidePropsType<typeof getServ
                     Dashboard
                 </h2>
             }
-            fallback={fallback}
         >
             <Head>
                 <title>Laravel - Dashboard</title>
@@ -42,15 +42,18 @@ export default Dashboard
 export const getServerSideProps = async ({ req }: GetServerSidePropsContext) => {
     authorize(req)
 
+    const queryClient = new QueryClient()
+
     try {
-        const user = await User.show()
+        const user = await queryClient.fetchQuery({
+            queryKey: [User.showPath],
+            queryFn: () => User.show(),
+        })
 
         return {
             props: {
                 car: user.car_id ? await Car.show(user.car_id): null,
-                fallback: {
-                    [User.showPath]: user,
-                }
+                dehydratedState: dehydrate(queryClient),
             },
         }
     } catch (error) {

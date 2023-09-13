@@ -1,4 +1,3 @@
-import useSWR from 'swr'
 import axios from '@/lib/axios'
 import { Dispatch, SetStateAction, useEffect } from 'react'
 import { useRouter } from 'next/router'
@@ -19,6 +18,7 @@ import VerifyEmailResponse from '@/types/Responses/VerifyEmailResponse'
 import ErrorBag from '@/types/ErrorBag'
 import { AxiosError } from 'axios'
 import { deleteCookie, setCookie } from 'cookies-next'
+import { useQuery } from '@tanstack/react-query'
 
 export interface useAuthProps {
     middleware?: 'guest' | 'auth'
@@ -33,8 +33,12 @@ export const useAuth = ({
 
     const { toast } = useToast()
 
-    const { data: user, error, mutate } = useSWR(User.showPath, () =>
-        User.show()
+    const { data: user, error, refetch: mutate } = useQuery({
+        queryKey: [User.showPath],
+        retry: false,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        queryFn: () => User.show()
             .then((user) => {
                 if (user?.id) {
                     Sentry.setUser({ id: user.id })
@@ -47,10 +51,7 @@ export const useAuth = ({
 
                 router.push('/verify-email')
             }),
-        {
-            shouldRetryOnError: false,
-        }
-    )
+    })
 
     const handleResponseError = (error: AxiosError) => {
         if (error.response?.data?.message || error.message) {
