@@ -2,9 +2,8 @@ import { useCar } from '@/hooks/useCar'
 import { Skeleton } from '@/components/ui/skeleton'
 import Image from 'next/image'
 import Car from '@/lib/api/Car'
-import { encodeToBase64 } from 'next/dist/build/webpack/loaders/utils'
 import { useState } from 'react'
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 
 const CarSection = () => {
     const { car } = useCar()
