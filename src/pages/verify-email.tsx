@@ -32,12 +32,12 @@ const VerifyEmail = () => {
             <AuthCard
                 logo={
                     <Link href="/">
-                        <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
+                        <ApplicationLogo className="w-20 h-20 fill-current text-muted-foreground" />
                     </Link>
                 }
             >
 
-                <div className="mb-4 text-sm text-gray-600">
+                <div className="mb-4 text-sm text-muted-foreground">
                     Thanks for signing up! Before getting started, could you
                     verify your email address by clicking on the link we just
                     emailed to you? If you didn't receive the email, we will
@@ -46,7 +46,7 @@ const VerifyEmail = () => {
 
                 <div className="mt-4 flex items-center justify-between">
                     {status ? (
-                        <div className="font-medium text-sm text-green-600">
+                        <div className="font-medium text-sm text-success-foreground">
                             {status}
                         </div>
                     ) : (
@@ -59,7 +59,7 @@ const VerifyEmail = () => {
 
                     <button
                         type="button"
-                        className="underline text-sm text-gray-600 hover:text-gray-900"
+                        className="underline text-sm text-muted-foreground hover:text-foreground"
                         onClick={logout}
                     >
                         Logout

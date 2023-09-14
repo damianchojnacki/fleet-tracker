@@ -35,9 +35,6 @@ export const useAuth = ({
 
     const { data: user, error, refetch: mutate } = useQuery({
         queryKey: [User.showPath],
-        retry: false,
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
         queryFn: () => User.show()
             .then((user) => {
                 if (user?.id) {

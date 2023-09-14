@@ -4,7 +4,7 @@ module.exports = {
   content: [
     './src/**/*.{ts,tsx}',
     './stories/**/*.{ts,tsx}',
-	],
+  ],
   theme: {
     container: {
       center: true,

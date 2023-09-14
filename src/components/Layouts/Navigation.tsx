@@ -7,23 +7,19 @@ import ResponsiveNavLink, {
 } from '@/components/ResponsiveNavLink'
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 
 const Navigation = () => {
-    const { user, logout } = useAuth({ middleware: 'auth' })
     const [open, setOpen] = useState(false)
+
     const router = useRouter()
 
-    useEffect(() => {
-        if(user && !user.organization_id){
-            router.push('/associate-organization')
-        }
-    }, [user])
+    const { logout, user } = useAuth()
 
     return (
-        <nav className="bg-white border-b border-gray-100">
+        <nav className="bg-background border-b">
             {/* Primary Navigation Menu */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
@@ -31,7 +27,7 @@ const Navigation = () => {
                         {/* Logo */}
                         <div className="flex-shrink-0 flex items-center">
                             <Link href="/dashboard">
-                                <ApplicationLogo className="block h-10 w-auto fill-current text-gray-600" />
+                                <ApplicationLogo className="block h-10 w-auto fill-current text-muted-foreground" />
                             </Link>
                         </div>
 

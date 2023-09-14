@@ -109,11 +109,11 @@ const AssociateOrganization = () => {
             <AuthCard
                 logo={
                     <Link href="/">
-                        <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
+                        <ApplicationLogo className="w-20 h-20 fill-current text-muted-foreground" />
                     </Link>
                 }
             >
-                <div className="mb-4 text-sm text-gray-600">
+                <div className="mb-4 text-sm text-muted-foreground">
                     It looks like you don't have an organization assigned to your account.
                     Please ask your organization administrator to invite you to their organization or
                     create your own.

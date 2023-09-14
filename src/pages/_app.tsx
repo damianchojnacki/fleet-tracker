@@ -11,12 +11,20 @@ const font = Nunito({
 })
 
 const App = ({ Component, pageProps }) => {
-    const [queryClient] = useState(() => new QueryClient())
+    const [queryClient] = useState(() => new QueryClient({
+        defaultOptions: {
+            queries: {
+                retry: false,
+                refetchOnWindowFocus: false,
+                refetchOnMount: false,
+            }
+        }
+    }))
 
     return (
         <QueryClientProvider client={queryClient}>
             <Hydrate state={pageProps.dehydratedState}>
-                <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+                <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
                     <main className={`${font.variable}`}>
                         <Component {...pageProps} />
                     </main>

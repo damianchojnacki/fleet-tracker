@@ -41,7 +41,7 @@ const Register = () => {
             <AuthCard
                 logo={
                     <Link href="/">
-                        <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
+                        <ApplicationLogo className="w-20 h-20 fill-current text-muted-foreground" />
                     </Link>
                 }
             >
@@ -149,7 +149,7 @@ const Register = () => {
                     <div className="flex items-center justify-end mt-4 flex-wrap">
                         <Link
                             href="/login"
-                            className="underline text-sm text-gray-600 hover:text-gray-900 mb-5 sm:mb-0 self-end sm:self-auto"
+                            className="underline text-sm text-muted-foreground hover:text-foreground mb-5 sm:mb-0 self-end sm:self-auto"
                         >
                             Already registered?
                         </Link>

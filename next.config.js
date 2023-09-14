@@ -4,6 +4,9 @@ module.exports = {
         // your project has ESLint errors.
         ignoreDuringBuilds: false,
     },
+    images: {
+        domains: ['cdn.imagin.studio'],
+    },
     output: 'standalone',
 }
 

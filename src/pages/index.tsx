@@ -11,12 +11,12 @@ export default function Home() {
                 <title>Laravel</title>
             </Head>
 
-            <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+            <div className="relative flex items-top justify-center min-h-screen bg-background sm:items-center sm:pt-0">
                 <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     {user ? (
                         <Link
                             href="/dashboard"
-                            className="ml-4 text-sm text-gray-700 underline"
+                            className="ml-4 text-sm text-muted-foreground underline"
                         >
                             Dashboard
                         </Link>
@@ -24,14 +24,14 @@ export default function Home() {
                         <>
                             <Link
                                 href="/login"
-                                className="text-sm text-gray-700 underline"
+                                className="text-sm text-muted-foreground underline"
                             >
                                 Login
                             </Link>
 
                             <Link
                                 href="/register"
-                                className="ml-4 text-sm text-gray-700 underline"
+                                className="ml-4 text-sm text-muted-foreground underline"
                             >
                                 Register
                             </Link>

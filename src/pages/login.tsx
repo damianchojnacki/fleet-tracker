@@ -60,7 +60,7 @@ const Login = () => {
             <AuthCard
                 logo={
                     <Link href="/">
-                        <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
+                        <ApplicationLogo className="w-20 h-20 fill-current text-muted-foreground" />
                     </Link>
                 }
             >
@@ -113,7 +113,7 @@ const Login = () => {
 
                             <Label
                                 htmlFor="remember_me"
-                                className="ml-2 text-sm text-gray-600 cursor-pointer"
+                                className="ml-2 text-sm text-muted-foreground cursor-pointer"
                             >
                                 Remember me
                             </Label>
@@ -121,7 +121,7 @@ const Login = () => {
 
                         <Link
                             href="/forgot-password"
-                            className="underline text-sm text-gray-600 hover:text-gray-900 mb-5 sm:mb-0 self-end sm:self-auto"
+                            className="underline text-sm text-muted-foreground hover:text-foreground mb-5 sm:mb-0 self-end sm:self-auto"
                         >
                             Forgot your password?
                         </Link>

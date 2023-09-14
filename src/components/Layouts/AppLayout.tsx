@@ -1,5 +1,7 @@
 import Navigation from '@/components/Layouts/Navigation'
-import { SWRConfig } from 'swr'
+import { useAuth } from '@/hooks/useAuth'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 export interface AppLayoutProps {
     header: React.ReactNode
@@ -7,12 +9,21 @@ export interface AppLayoutProps {
 }
 
 const AppLayout = ({ header, children }: AppLayoutProps) => {
+    const { user } = useAuth({ middleware: 'auth' })
+    const router = useRouter()
+
+    useEffect(() => {
+        if(user && !user.organization_id){
+            router.push('/associate-organization')
+        }
+    }, [user])
+
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-background">
             <Navigation />
 
             {/* Page Heading */}
-            <header className="bg-white shadow">
+            <header className="bg-secondary shadow">
                 <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {header}
                 </div>
