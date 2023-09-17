@@ -1,6 +1,7 @@
 import { useAuth } from '@/hooks/useAuth'
-import { renderHook } from '@testing-library/react'
-import * as SWR from 'swr'
+import { renderHook, waitFor } from '@testing-library/react'
+import nock from 'nock'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 jest.mock('next/router', () => ({
     useRouter: jest.fn()
@@ -8,7 +9,15 @@ jest.mock('next/router', () => ({
 
 describe('useAuth', function () {
     it('user should be undefined by default', async () => {
-        const { result } = renderHook(() => useAuth())
+        const queryClient = new QueryClient()
+
+        const wrapper = ({ children }) => (
+            <QueryClientProvider client={queryClient}>
+                {children}
+            </QueryClientProvider>
+        )
+
+        const { result } = renderHook(() => useAuth(), { wrapper })
 
         expect(result.current.user).toBe(undefined)
     })
@@ -20,18 +29,20 @@ describe('useAuth', function () {
             email_verified_at: '2023-09-01T16:18:21.719Z',
         }
 
-        jest.spyOn(SWR, 'default').mockImplementationOnce(() => {
-            return {
-                data: user,
-                error: undefined,
-                mutate: jest.fn(),
-                isValidating: false,
-            }
-        })
+        nock(process.env.NEXT_PUBLIC_API_URL ?? '')
+            .get('/api/user')
+            .reply(200, user)
 
-        const { result } = renderHook(() => useAuth())
+        const queryClient = new QueryClient()
 
-        expect(SWR.default).toHaveBeenCalledTimes(1)
-        expect(result.current.user).toBe(user)
+        const wrapper = ({ children }) => (
+            <QueryClientProvider client={queryClient}>
+                {children}
+            </QueryClientProvider>
+        )
+
+        const { result } = renderHook(() => useAuth(), { wrapper })
+
+        await waitFor(() => expect(result.current.user).toStrictEqual(user))
     })
 })
