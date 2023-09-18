@@ -44,7 +44,15 @@ export const useAuth = ({
                 return user
             })
             .catch(error => {
-                if (error.response?.status !== 409) throw error
+                if(error.response?.status === 401) {
+                    console.warn('Unauthenticated.')
+
+                    return null
+                }
+
+                if (error.response?.status !== 409) {
+                    throw error
+                }
 
                 router.push('/verify-email')
             }),

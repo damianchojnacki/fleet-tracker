@@ -17,6 +17,10 @@ describe('useAuth', function () {
             </QueryClientProvider>
         )
 
+        nock(process.env.NEXT_PUBLIC_API_URL ?? '')
+            .get('/api/user')
+            .reply(401, { message: 'Unauthenticated.' })
+
         const { result } = renderHook(() => useAuth(), { wrapper })
 
         expect(result.current.user).toBe(undefined)
