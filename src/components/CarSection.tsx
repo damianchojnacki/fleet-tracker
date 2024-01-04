@@ -9,6 +9,14 @@ const CarSection = () => {
     const { car } = useCar()
     const [isImageLoaded, setIsImageLoaded] = useState(false)
 
+    if (!car) {
+        return (
+            <div className="p-6 border-b flex gap-3">
+                No car selected
+            </div>
+        )
+    }
+
     return (
         <div className="p-6 border-b flex gap-3">
             <div className="w-1/2">
