@@ -1,4 +1,4 @@
-import ApplicationLogo from '@/components/ApplicationLogo'
+import ApplicationLogoSmall from '@/components/ApplicationLogoSmall'
 import Dropdown from '@/components/Dropdown'
 import Link from 'next/link'
 import NavLink from '@/components/NavLink'
@@ -11,6 +11,7 @@ import { useState } from 'react'
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import ThemeSwitch from '@/components/ThemeSwitch'
+
 
 const Navigation = () => {
     const [open, setOpen] = useState(false)
@@ -28,7 +29,7 @@ const Navigation = () => {
                         {/* Logo */}
                         <div className="flex-shrink-0 flex items-center">
                             <Link href="/dashboard">
-                                <ApplicationLogo className="block h-10 w-auto fill-current text-muted-foreground" />
+                                <ApplicationLogoSmall className="block h-10 w-auto fill-current text-muted-foreground" />
                             </Link>
                         </div>
 
