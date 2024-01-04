@@ -19,6 +19,7 @@ import ErrorBag from '@/types/ErrorBag'
 import { AxiosError } from 'axios'
 import { deleteCookie, setCookie } from 'cookies-next'
 import { useQuery } from '@tanstack/react-query'
+import UserType from '@/types/Models/User'
 
 export interface useAuthProps {
     middleware?: 'guest' | 'auth'
@@ -33,7 +34,7 @@ export const useAuth = ({
 
     const { toast } = useToast()
 
-    const { data: user, error, refetch: mutate } = useQuery({
+    const { data: user, error, refetch: mutate } = useQuery<UserType | null, AxiosError>({
         queryKey: [User.showPath],
         queryFn: () => User.show()
             .then((user) => {
@@ -43,18 +44,18 @@ export const useAuth = ({
 
                 return user
             })
-            .catch(error => {
-                if(error.response?.status === 401) {
-                    console.warn('Unauthenticated.')
+            .catch((error: AxiosError) => {
+                if (error.response?.status === 409) {
+                    router.push('/verify-email')
 
                     return null
                 }
 
-                if (error.response?.status !== 409) {
-                    throw error
+                if(error.response?.status === 401) {
+                    console.warn('Unauthenticated.')
                 }
 
-                router.push('/verify-email')
+                throw error
             }),
     })
 
@@ -205,7 +206,7 @@ export const useAuth = ({
             router.push(redirectIfAuthenticated)
         }
 
-        if (middleware === 'auth' && error) {
+        if (middleware === 'auth' && error && error.response?.status !== 409) {
             logout()
         }
     }, [user, error])
