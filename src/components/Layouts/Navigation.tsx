@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+import ThemeSwitch from '@/components/ThemeSwitch'
 
 const Navigation = () => {
     const [open, setOpen] = useState(false)
@@ -69,6 +70,8 @@ const Navigation = () => {
                                 Logout
                             </DropdownMenuItem>
                         </Dropdown>
+
+                        <ThemeSwitch />
                     </div>
 
                     {/* Hamburger */}
@@ -116,10 +119,14 @@ const Navigation = () => {
                         >
                             Dashboard
                         </ResponsiveNavLink>
+
+                        <ResponsiveNavButton onClick={logout}>
+                            Logout
+                        </ResponsiveNavButton>
                     </div>
 
                     {/* Responsive Settings Options */}
-                    <div className="pt-4 pb-1 border-t border-gray-200">
+                    <div className="py-4 border-t border-gray-200">
                         <div className="flex items-center px-4">
                             <div className="flex-shrink-0">
                                 <svg
@@ -139,20 +146,17 @@ const Navigation = () => {
                             </div>
 
                             <div className="ml-3">
-                                <div className="font-medium text-base text-gray-800">
+                                <div className="font-medium text-base text-gray-300">
                                     {user?.firstname}
                                 </div>
                                 <div className="font-medium text-sm text-gray-500">
                                     {user?.email}
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="mt-3 space-y-1">
-                            {/* Authentication */}
-                            <ResponsiveNavButton onClick={logout}>
-                                Logout
-                            </ResponsiveNavButton>
+                            <div className="ml-auto">
+                                <ThemeSwitch />
+                            </div>
                         </div>
                     </div>
                 </div>
