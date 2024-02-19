@@ -66,6 +66,9 @@ const Navigation = () => {
                                 </Button>
                             }
                         >
+                            <DropdownMenuItem className="cursor-pointer">
+                                <Link href="/support">Support</Link>
+                            </DropdownMenuItem>
                             <DropdownMenuItem onClick={logout} className="cursor-pointer">
                                 Logout
                             </DropdownMenuItem>
