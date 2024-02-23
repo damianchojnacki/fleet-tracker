@@ -1,5 +1,5 @@
-const ApplicationLogoSmall = () => (
-  <svg className="w-12 h-12" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="2" viewBox="0 0 1080 1080" version="1.1" >
+const ApplicationLogoSmall = ({ className = 'w-12 h-12' }: {className: string}) => (
+  <svg className={className} fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="2" viewBox="0 0 1080 1080" version="1.1" >
   <g transform="matrix(2.12889,0,0,2.12889,600.947,749.29)">
       <g transform="matrix(1,0,0,1,-579.29,-437.805)">
           <g transform="matrix(1.47038,0,0,1.36618,-322.27,-44.6095)">
