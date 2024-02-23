@@ -1,12 +1,10 @@
-import ChatMessageType from '@/types/Models/ChatMessage'
-import { useAuth } from '@/hooks/useAuth'
 import ChatMessage from '@/components/ChatMessage'
 import { useChat } from '@/hooks/useChat'
 import { useEffect, useRef } from 'react'
 import ChatInput from '@/components/ChatInput'
 
 const Chat = () => {
-    const {messages} = useChat()
+    const { messages } = useChat()
     const chatContainerRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {

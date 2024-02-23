@@ -1,7 +1,5 @@
 import AppLayout from '@/components/Layouts/AppLayout'
 import Head from 'next/head'
-import { useChat } from '@/hooks/useChat'
-import ChatMessage from '@/components/ChatMessage'
 import Chat from '@/components/Chat'
 
 const Dashboard = () => {

@@ -3,14 +3,13 @@ import { Textarea } from '@/components/ui/textarea'
 import { useState } from 'react'
 import Link from 'next/link'
 import { SendHorizontal } from 'lucide-react'
-import Organization from '@/lib/api/Organization'
 import ChatMessage from '@/lib/api/ChatMessage'
 import { useChat } from '@/hooks/useChat'
 import { useToast } from '@/components/ui/use-toast'
 
 const ChatInput = () => {
-    const {user} = useAuth()
-    const {refresh} = useChat()
+    const { user } = useAuth()
+    const { refresh } = useChat()
     const [message, setMessage] = useState<string>('')
     const { toast } = useToast()
 

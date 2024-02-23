@@ -1,6 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import Car from '@/lib/api/Car'
-import { useAuth } from '@/hooks/useAuth'
 import axios from '@/lib/axios'
 
 export const useBrands = () => {
