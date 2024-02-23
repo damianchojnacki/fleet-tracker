@@ -11,6 +11,7 @@ env:
   VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
   VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  NEXT_PUBLIC_API_URL: ${{ vars.API_URL }}
 jobs:
   deploy:
     runs-on: ubuntu-latest
