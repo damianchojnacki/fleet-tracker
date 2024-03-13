@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import Login from '@/pages/login'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 jest.mock('next/router', () => ({
     useRouter: jest.fn()
@@ -9,7 +10,13 @@ jest.mock('axios')
 
 describe('login', () => {
     it('form should be visible', () => {
-        render(<Login />)
+        const client = new QueryClient()
+
+        render(
+            <QueryClientProvider client={client}>
+                <Login />
+            </QueryClientProvider>
+        )
 
         expect(screen.getByText('Email')).toBeVisible()
         expect(screen.getByText('Password')).toBeVisible()
