@@ -4,27 +4,27 @@ import { useEffect, useRef } from 'react'
 import ChatInput from '@/components/ChatInput'
 
 const Chat = () => {
-    const { messages } = useChat()
-    const chatContainerRef = useRef<HTMLDivElement>(null)
+  const { messages } = useChat()
+  const chatContainerRef = useRef<HTMLDivElement>(null)
 
-    useEffect(() => {
-        if (chatContainerRef.current) {
-            chatContainerRef.current.scrollTop =
-                chatContainerRef.current.scrollHeight
-        }
-    }, [messages])
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight
+    }
+  }, [messages])
 
-    return (
-        <>
-            <div className="w-full overflow-y-auto overflow-x-hidden h-[70vh] flex flex-col" ref={chatContainerRef}>
-                {messages.map((message) => (
-                    <ChatMessage key={message.id} {...message} />
-                ))}
-            </div>
+  return (
+    <>
+      <div className="w-full overflow-y-auto overflow-x-hidden h-[50vh] md:h-[55vh] flex flex-col" ref={chatContainerRef}>
+        {messages.map((message) => (
+          <ChatMessage key={message.id} {...message} />
+        ))}
+      </div>
 
-            <ChatInput />
-        </>
-    )
+      <ChatInput />
+    </>
+  )
 }
 
 export default Chat

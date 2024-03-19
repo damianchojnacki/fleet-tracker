@@ -16,7 +16,7 @@ const ChatMessage = (props: ChatMessageType) => {
                 <Tooltip delayDuration={300}>
                     <TooltipTrigger asChild>
                         <span className="bg-accent p-3 rounded-md max-w-xs">
-                          {props.content}
+                            {props.content}
                         </span>
                     </TooltipTrigger>
                     <TooltipContent side="bottom" align={user?.id === props.author_id ? 'end' : 'start'}>

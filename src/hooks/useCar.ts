@@ -7,6 +7,7 @@ export const useCar = () => {
 
     const { user } = useAuth()
 
+
     const { data: car, refetch: mutate } = useQuery({
         queryKey: [Car.path, user?.id],
         queryFn: () => user?.car_id ? Car.show(user?.car_id) : null,

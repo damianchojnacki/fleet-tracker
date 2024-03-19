@@ -19,7 +19,7 @@ export default class Car
         url.searchParams.set('make', car.brand?.name ?? '')
         url.searchParams.set('modelFamily', car.specs.model ?? '')
         url.searchParams.set('color', car.specs.color ?? '')
-        url.searchParams.set('angle', '23')
+        url.searchParams.set('angle', '1')
         url.searchParams.set('zoomType', 'fullscreen')
         url.searchParams.set('width', '1280')
 
