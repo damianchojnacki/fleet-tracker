@@ -6,7 +6,7 @@ import {
   Tabs,
   TabsList,
   TabsTrigger,
-} from "@/components/ui/tabs"
+} from '@/components/ui/tabs'
 import ForgotPasswordForm from '@/components/ForgotPasswordForm'
 import LoginForm from '@/components/LoginForm'
 
@@ -17,7 +17,8 @@ const Login = () => {
         <Link href="/">
           <ApplicationLogo className="w-32 h-32 fill-current text-muted-foreground" />
         </Link>
-      }>
+      }
+      >
         <Tabs defaultValue="account" className="w-full">
           <TabsList className="grid w-full grid-cols-2 bg-secondary">
             <TabsTrigger value="account" className="text-primary font-semibold">Account</TabsTrigger>

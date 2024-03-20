@@ -8,8 +8,8 @@ import Head from 'next/head'
 import Welcome from '@/components/Welcome'
 import CurrentVehicleCard from '@/components/CurrentVehicleCard'
 import Footer from '@/components/Footer'
-import { useMemo } from "react"
-import dynamic from "next/dynamic"
+import { useMemo } from 'react'
+import dynamic from 'next/dynamic'
 
 const Dashboard = () => {
   const Map = useMemo(() => dynamic(

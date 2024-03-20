@@ -1,5 +1,5 @@
 import '@/styles/global.css'
-import 'leaflet/dist/leaflet.css';
+import 'leaflet/dist/leaflet.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { Toaster } from '@/components/ui/toaster'
 import { Nunito } from 'next/font/google'

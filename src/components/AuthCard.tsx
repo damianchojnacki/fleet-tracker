@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react'
-import { Card, CardContent } from './ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 
 export interface AuthCardProps {
   children: ReactNode,
@@ -7,7 +7,7 @@ export interface AuthCardProps {
 }
 
 const AuthCard: FC<AuthCardProps> = ({ logo, children }) => (
-  <div className="w-full flex flex-col justify-center items-center pt-6 pb-6 m-5 md:m-0">
+  <div className="w-full flex flex-col justify-center items-center py-6 px-1 m-5 md:m-0">
     <div className="flex-grow-0 flex items-center mb-6">{logo}</div>
 
     <Card className="w-full max-w-md min-w-[300px] pt-4 overflow-hidden rounded-t-3xl rounded-b-none rounded-lg">
