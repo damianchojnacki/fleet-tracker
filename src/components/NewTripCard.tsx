@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { DatePickerDemo } from './DatePicker'
+import { DatePickerDemo } from '@/components/DatePicker'
 import Link from 'next/link'
 
 export function NewTripCard() {

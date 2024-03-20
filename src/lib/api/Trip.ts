@@ -1,5 +1,5 @@
 import TripType from '@/types/Models/Trip'
-import axios from '../axios'
+import axios from '@/lib/axios'
 
 export default class Trip
 {

@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import InputError from './InputError'
-import { Button } from './ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader } from './ui/card'
-import { Input } from './ui/input'
-import { Label } from './ui/label'
-import { TabsContent } from './ui/tabs'
+import InputError from '@/components/InputError'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { TabsContent } from '@/components/ui/tabs'
 import ErrorBag from '@/types/ErrorBag'
 import { useAuth } from '@/hooks/useAuth'
-import AuthSessionStatus from './AuthSessionStatus'
+import AuthSessionStatus from '@/components/AuthSessionStatus'
 
 function ForgotPasswordForm() {
   const [email, setEmail] = useState('')

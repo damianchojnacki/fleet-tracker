@@ -13,9 +13,9 @@ import { TabsContent } from '@/components/ui/tabs'
 import { useAuth } from '@/hooks/useAuth'
 import ErrorBag from '@/types/ErrorBag'
 import { useRouter } from 'next/router'
-import { useToast } from './ui/use-toast'
-import { Checkbox } from './ui/checkbox'
-import InputError from './InputError'
+import { useToast } from '@/components/ui/use-toast'
+import { Checkbox } from '@/components/ui/checkbox'
+import InputError from '@/components/InputError'
 
 
 function LoginForm() {
