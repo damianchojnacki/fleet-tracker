@@ -8,6 +8,15 @@ module.exports = {
         domains: ['cdn.imagin.studio'],
     },
     output: 'standalone',
+    async redirects() {
+        return [
+            {
+                source: '/',
+                destination: '/dashboard',
+                permanent: false,
+            },
+        ]
+    },
 }
 
 
