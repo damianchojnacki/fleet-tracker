@@ -9,7 +9,10 @@ const Map: React.FC = () => {
   function LocationMarker() {
     const map = useMapEvents({
       click() {
-        !clicked && map.locate()
+        if(!clicked) {
+            map.locate()
+        }
+
         setClicked(true)
       },
       locationfound(e) {
