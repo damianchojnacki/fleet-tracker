@@ -22,7 +22,7 @@ const Login = () => {
         <Tabs defaultValue="account" className="w-full text-primary-foreground">
           <TabsList className="grid w-full grid-cols-2 bg-secondary">
             <TabsTrigger value="account" className="font-semibold">Account</TabsTrigger>
-            <TabsTrigger value="password" className="font-semibold">Password</TabsTrigger>
+            <TabsTrigger value="password" className="font-semibold">Forgot Password</TabsTrigger>
           </TabsList>
           <LoginForm />
           <ForgotPasswordForm />

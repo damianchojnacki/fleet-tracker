@@ -21,6 +21,11 @@ function ForgotPasswordForm() {
 
   const submitForgotPasswordForm = async event => {
     event.preventDefault()
+
+    if(!email) {
+        return
+    }
+
     forgotPassword({ email, setErrors, setStatus })
   }
 
@@ -35,7 +40,7 @@ function ForgotPasswordForm() {
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name" className="font-semibold">Email address*</Label>
-                <Input type="email" value={email} id="email" placeholder="example@fleet-tracker.com" className="border-secondary" onChange={event => setEmail(event.target.value)} required autoFocus />
+                <Input name="email" type="email" value={email} id="email" placeholder="example@fleet-tracker.com" className="border-secondary" onChange={event => setEmail(event.target.value)} required autoFocus />
                 <InputError messages={errors.email} className="mt-2" />
               </div>
             </div>

@@ -1,12 +1,8 @@
 describe('Forgot Password Page', () => {
     beforeEach(() => {
-        cy.visit('/forgot-password') // Adjust the URL as needed
-    })
+        cy.visit('/login') // Adjust the URL as needed
 
-    it('should display the Forgot Password page correctly', () => {
-        // Verify the page title or any other relevant content
-        cy.contains('Forgot your password?').should('be.visible')
-        cy.contains('Email Password Reset Link').should('be.visible')
+        cy.contains('Forgot Password').click()
     })
 
     it('should not allow to submit an empty form', () => {
