@@ -61,11 +61,11 @@ export function NewTripCard() {
   }
 
   return (
-    <Card className="mt-4 text-primary border-secondary">
+    <Card className="mt-4 text-primary-foreground border-secondary">
       <form onSubmit={handleSubmit}>
         <CardHeader>
           <CardTitle><span className="text-lg">Add new trip</span></CardTitle>
-          <CardDescription><span className="text-base text-primary">You can add an information about new trip here.</span></CardDescription>
+          <CardDescription><span className="text-base">You can add an information about new trip here.</span></CardDescription>
         </CardHeader>
         <CardContent className="text-sm">
           <div className="grid grid-cols-5 gap-4">
@@ -101,10 +101,10 @@ export function NewTripCard() {
           </div>
         </CardContent>
         <CardFooter className="flex justify-end gap-2">
-          <Button className="bg-secondary hover:bg-[#FFB909]/[0.8] text-primary text-sm font-semibold" type="button">
+          <Button variant="secondary" className="text-sm font-semibold" type="button">
             <Link href="/trips">Back</Link>
           </Button>
-          <Button className="bg-primary hover:bg-[#1B4865]/[0.8] text-white text-sm font-semibold">Save changes</Button>
+          <Button className="text-sm font-semibold">Save changes</Button>
         </CardFooter>
       </form>
     </Card>

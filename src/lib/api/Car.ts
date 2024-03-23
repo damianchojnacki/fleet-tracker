@@ -18,7 +18,7 @@ export default class Car
             .then((res) => res.data)
     }
     
-    public static activate(id: number): Promise<CarType>
+    public static select(id: number): Promise<CarType>
     {
         return axios.put<CarType>(`${Car.pathUserCars}/${id}`)
             .then((res) => res.data)

@@ -7,12 +7,12 @@ export const useCar = () => {
 
   const { user } = useAuth()
 
-  const { data: car, refetch: mutate } = useQuery({
-      queryKey: [Car.path, user?.id],
+  const { data: car, refetch: refreshCar } = useQuery({
+      queryKey: [Car.path, user?.car_id],
       queryFn: () => user?.car_id ? Car.show(user?.car_id) : null,
   })
 
-  const { data: availableCars } = useQuery({
+  const { data: availableCars, refetch: refreshAvailableCars } = useQuery({
     queryKey: [Car.path],
     queryFn: () => Car.index(),
   })
@@ -40,6 +40,7 @@ export const useCar = () => {
     return {
         car,
         availableCars,
-        refresh: mutate,
+        refreshCar,
+        refreshAvailableCars,
     }
 }

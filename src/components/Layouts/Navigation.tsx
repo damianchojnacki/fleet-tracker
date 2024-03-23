@@ -12,7 +12,6 @@ import ThemeSwitch from '@/components/ThemeSwitch'
 import { Car, LogOut, MessageCircle, Navigation2, User } from 'lucide-react'
 import { UserAvatar } from '@/components/Avatar'
 
-
 const Navigation = () => {
   const [open, setOpen] = useState(false)
 
@@ -47,7 +46,7 @@ const Navigation = () => {
             >
               <DropdownMenuItem className="cursor-pointer">
                 <User className="mr-2 h-4 w-4" />
-                <Link href="/dashboard">Main</Link>
+                <Link href="/dashboard">Map</Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">
                 <Navigation2 className="mr-2 h-4 w-4" />
@@ -55,7 +54,7 @@ const Navigation = () => {
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">
                 <Car className="mr-2 h-4 w-4" />
-                <Link href="/cars">Vehicles</Link>
+                <Link href="/cars">Cars</Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">
                 <MessageCircle className="mr-2 h-4 w-4" />

@@ -26,9 +26,9 @@ const Dashboard = () => {
         <title>Laravel - Dashboard</title>
       </Head>
 
-      <div className="py-20 relative">
+      <div className="p-2 relative">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <div className="overflow-hidden shadow-sm sm:rounded-lg border p-2 z-20 relative bg-background">
+          <div className="overflow-hidden shadow-sm sm:rounded-lg border p-2 z-20 relative bg-background/[0.75]">
             <Welcome />
             <CurrentVehicleCard />
           </div>

@@ -17,12 +17,12 @@ export default function ForgotPasswordCard() {
           <ApplicationLogo className="w-32 h-32 fill-current text-muted-foreground" />
         </Link>
       </div>
-      <Card className="w-[400px] border-secondary">
+      <Card className="w-[400px] border-secondary text-primary-foreground">
         <CardHeader>
-          <CardDescription className="text-primary font-semibold">An email with a temporary password has been sent to your email address. For security, we recommend changing your password after logging in</CardDescription>
+          <CardDescription className="font-semibold">An email with a temporary password has been sent to your email address. For security, we recommend changing your password after logging in</CardDescription>
         </CardHeader>
         <CardFooter>
-          <Button className="min-w-full text-white font-semibold bg-primary hover:bg-[#1B4865]/[0.8]">Go to Sign In form</Button>
+          <Button className="min-w-full font-semibold">Go to Sign In form</Button>
         </CardFooter>
       </Card>
     </div>

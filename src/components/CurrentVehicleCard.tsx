@@ -6,14 +6,14 @@ import Car from '@/lib/api/Car'
 
 const CurrentVehicleInfo = ({ car }) => {
   return (
-    <div className="ml-4">
-      <h2 className="text-base md:text-lg text-white md:text-primary font-semibold
+    <div className="ml-4 text-primary-foreground">
+      <h2 className="text-base md:text-lg font-semibold
           my-3"
       >Current vehicle</h2>
-      <p className="text-sm md:text-base text-white md:text-primary my-1">Make: {car?.brand?.name}</p>
-      <p className="text-sm md:text-base text-white md:text-primary my-1 capitalize">Model: {car.specs.model}</p>
-      <p className="text-sm md:text-base text-white md:text-primary my-1">Registration: {car.specs.plate_number}</p>
-      <p className="text-sm md:text-base text-white md:text-primary my-1">Odometer: {car.mileage.toLocaleString()} km</p>
+      <p className="text-sm md:text-base my-1">Make: {car?.brand?.name}</p>
+      <p className="text-sm md:text-base my-1 capitalize">Model: {car.specs.model}</p>
+      <p className="text-sm md:text-base my-1">Registration: {car.specs.plate_number}</p>
+      <p className="text-sm md:text-base my-1">Odometer: {car.mileage.toLocaleString()} km</p>
     </div>
   )
 }

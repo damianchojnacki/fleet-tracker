@@ -14,3 +14,4 @@ export default interface Trip {
   points: TripPoint[]
   car: Car
 }
+

@@ -59,20 +59,20 @@ function LoginForm() {
 
   return (
     <TabsContent value="account">
-      <Card className="w-full border-secondary">
+      <Card className="w-full border-secondary text-primary-foreground">
         <form onSubmit={submitSignInForm}>
           <CardHeader>
-            <CardDescription className="text-primary font-semibold">Enter your email address and password to Sign In</CardDescription>
+            <CardDescription className="font-semibold">Enter your email address and password to Sign In</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name" className="text-primary font-semibold">Email address*</Label>
+                <Label htmlFor="name" className="font-semibold">Email address*</Label>
                 <Input type="email" value={email} id="email" placeholder="example@fleet-tracker.com" className="border-secondary  " onChange={event => setEmail(event.target.value)} required autoFocus />
                 <InputError messages={errors.email} className="mt-2" />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="framework" className="text-primary font-semibold">Password*</Label>
+                <Label htmlFor="framework" className="font-semibold">Password*</Label>
                 <Input type="password" value={password} required autoComplete="current-password" id="password" placeholder="password" className="border-secondary" onChange={event => setPassword(event.target.value)} />
                 <InputError messages={errors.password} className="mt-2" />
               </div>
@@ -85,7 +85,7 @@ function LoginForm() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="min-w-full text-white font-semibold bg-primary hover:bg-[#1B4865]/[0.8]">Sign In</Button>
+            <Button className="min-w-full font-semibold">Sign In</Button>
           </CardFooter>
         </form>
       </Card>

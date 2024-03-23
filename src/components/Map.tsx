@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
-import L from 'leaflet'
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents, ZoomControl } from 'react-leaflet'
+import L, { LatLng } from 'leaflet'
 
 const Map: React.FC = () => {
-  const [position, setPosition] = useState(null)
+  const [position, setPosition] = useState<LatLng | null>(null)
+  const [clicked, setClicked] = useState(false)
 
   function LocationMarker() {
     const map = useMapEvents({
       click() {
-        map.locate()
+        !clicked && map.locate()
+        setClicked(true)
       },
       locationfound(e) {
         setPosition(e.latlng)
@@ -30,13 +32,14 @@ const Map: React.FC = () => {
 
   return (
     <div className='my-3'>
-      <MapContainer center={[52.22, 21.01]} zoom={13} className="absolute top-0 left-0 h-[100vh] w-full z-10">
+      <MapContainer center={[52.22, 21.01]} zoom={13} className="absolute top-0 left-0 h-[86vh] md:h-[92vh] w-full z-10" zoomControl={false}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           zIndex={1}
         />
         <LocationMarker />
+        <ZoomControl position="bottomright" />
       </MapContainer>
     </div>
   )

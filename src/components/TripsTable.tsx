@@ -12,7 +12,7 @@ export default function TripsTable() {
   const { trips } = useTrip()
 
   return (
-    <Table className="text-primary">
+    <Table className="text-primary-foreground">
       <TableHeader>
         <TableRow>
           <TableHead className="hidden md:table-cell">№</TableHead>
