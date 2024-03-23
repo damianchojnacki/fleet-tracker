@@ -4,10 +4,23 @@ import CarType from '@/types/Models/Car'
 export default class Car
 {
     public static path: string = '/api/cars'
+    public static pathUserCars: string = '/api/user/cars'
+
+    public static index(): Promise<CarType[]>
+    {
+        return axios.get<CarType[]>(`${Car.path}`)
+            .then((res) => res.data)
+    }
 
     public static show(id: number): Promise<CarType>
     {
         return axios.get<CarType>(`${Car.path}/${id}`)
+            .then((res) => res.data)
+    }
+    
+    public static activate(id: number): Promise<CarType>
+    {
+        return axios.put<CarType>(`${Car.pathUserCars}/${id}`)
             .then((res) => res.data)
     }
 

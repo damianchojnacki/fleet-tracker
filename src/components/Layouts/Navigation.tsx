@@ -55,7 +55,7 @@ const Navigation = () => {
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">
                 <Car className="mr-2 h-4 w-4" />
-                <Link href="/vehicles">Vehicles</Link>
+                <Link href="/cars">Vehicles</Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer">
                 <MessageCircle className="mr-2 h-4 w-4" />
@@ -111,7 +111,7 @@ const Navigation = () => {
             <ResponsiveNavLink href="/trips" active={router.pathname === '/trips'}>
               Trips
             </ResponsiveNavLink>
-            <ResponsiveNavLink href="/vehicles" active={router.pathname === '/vehicles'}>
+            <ResponsiveNavLink href="/cars" active={router.pathname === '/cars'}>
               Vehicles
             </ResponsiveNavLink>
             <ResponsiveNavLink href="/support" active={router.pathname === '/support'}>
