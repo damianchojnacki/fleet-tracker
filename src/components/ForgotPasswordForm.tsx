@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import InputError from '@/components/InputError'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card'
@@ -14,25 +14,25 @@ function ForgotPasswordForm() {
   const [errors, setErrors] = useState<ErrorBag>({})
   const [status, setStatus] = useState<string | null>(null)
 
-  const { forgotPassword } = useAuth({
+  const { forgotPassword: submit } = useAuth({
     middleware: 'guest',
     redirectIfAuthenticated: '/dashboard',
   })
 
-  const submitForgotPasswordForm = async event => {
-    event.preventDefault()
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
 
     if(!email) {
         return
     }
 
-    forgotPassword({ email, setErrors, setStatus })
+    await submit({ email, setErrors, setStatus })
   }
 
   return (
     <TabsContent value="password">
       <Card className="w-full border-secondary text-primary-foreground">
-        <form onSubmit={submitForgotPasswordForm}>
+        <form onSubmit={handleSubmit}>
           <CardHeader>
             <CardDescription className="font-semibold">Please enter your email address and we’ll send you instructions on to how to reset your password</CardDescription>
           </CardHeader>

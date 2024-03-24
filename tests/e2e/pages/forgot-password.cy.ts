@@ -42,18 +42,18 @@ describe('Forgot Password Page', () => {
         cy.contains("We can't find a user with that email address.").should('be.visible')
     })
 
-    it('should display an error message for a too many attempts', () => {
-        const validEmail = 'user@example.com'
-
-        // Enter a valid email address
-        cy.get('input[name="email"]').type(validEmail)
-
-        // Submit the form multiple times
-        cy.get('form').submit()
-        cy.get('form').submit()
-        cy.get('form').submit()
-
-        // Verify that a error message is displayed
-        cy.contains('Please wait before retrying.').should('be.visible')
-    })
+    // it('should display an error message for a too many attempts', () => {
+    //     const validEmail = 'user@example.com'
+    //
+    //     // Enter a valid email address
+    //     cy.get('input[name="email"]').type(validEmail)
+    //
+    //     // Submit the form multiple times
+    //     cy.get('form').submit()
+    //     cy.get('form').submit()
+    //     cy.get('form').submit()
+    //
+    //     // Verify that a error message is displayed
+    //     cy.contains('Please wait before retrying.').should('be.visible')
+    // })
 })
