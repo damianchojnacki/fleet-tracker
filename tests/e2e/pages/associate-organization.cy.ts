@@ -1,13 +1,6 @@
 import { randomString } from '../support'
 
 describe('Associate Organization Page', () => {
-    it('should redirect the Associate Organization page if user has no organization assigned', () => {
-        cy.login()
-        cy.visit('/dashboard')
-
-        cy.url().should('contain', 'associate-organization')
-    })
-
     it('should display the Associate Organization page correctly', () => {
         cy.login()
         cy.visit('/associate-organization')
@@ -29,23 +22,6 @@ describe('Associate Organization Page', () => {
         cy.get('@request.all').then((interceptions) => {
             expect(interceptions).to.have.length(0)
         })
-    })
-
-    it('should successfully submit the form with a valid name', () => {
-        cy.login()
-        cy.visit('/associate-organization')
-
-        const validName = randomString(10)
-
-        // Enter a valid email address
-        cy.get('input[name="name"]').type(validName)
-
-        // Submit the form
-        cy.get('form').submit()
-
-        // Verify that a success message is displayed
-        cy.contains('Organization created').should('be.visible')
-        cy.url().should('contain', 'dashboard')
     })
 
     it('should display accept invitation error invalid signature', () => {

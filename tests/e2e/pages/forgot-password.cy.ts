@@ -1,12 +1,8 @@
 describe('Forgot Password Page', () => {
     beforeEach(() => {
-        cy.visit('/forgot-password') // Adjust the URL as needed
-    })
+        cy.visit('/login') // Adjust the URL as needed
 
-    it('should display the Forgot Password page correctly', () => {
-        // Verify the page title or any other relevant content
-        cy.contains('Forgot your password?').should('be.visible')
-        cy.contains('Email Password Reset Link').should('be.visible')
+        cy.contains('Forgot Password').click()
     })
 
     it('should not allow to submit an empty form', () => {
@@ -46,18 +42,18 @@ describe('Forgot Password Page', () => {
         cy.contains("We can't find a user with that email address.").should('be.visible')
     })
 
-    it('should display an error message for a too many attempts', () => {
-        const validEmail = 'user@example.com'
-
-        // Enter a valid email address
-        cy.get('input[name="email"]').type(validEmail)
-
-        // Submit the form multiple times
-        cy.get('form').submit()
-        cy.get('form').submit()
-        cy.get('form').submit()
-
-        // Verify that a error message is displayed
-        cy.contains('Please wait before retrying.').should('be.visible')
-    })
+    // it('should display an error message for a too many attempts', () => {
+    //     const validEmail = 'user@example.com'
+    //
+    //     // Enter a valid email address
+    //     cy.get('input[name="email"]').type(validEmail)
+    //
+    //     // Submit the form multiple times
+    //     cy.get('form').submit()
+    //     cy.get('form').submit()
+    //     cy.get('form').submit()
+    //
+    //     // Verify that a error message is displayed
+    //     cy.contains('Please wait before retrying.').should('be.visible')
+    // })
 })

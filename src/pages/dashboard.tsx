@@ -6,32 +6,39 @@ import Head from 'next/head'
 // import { authorize } from '@/lib/utils'
 // import { dehydrate, QueryClient } from '@tanstack/react-query'
 import Welcome from '@/components/Welcome'
-import CarSection from '@/components/CarSection'
+import CurrentVehicleCard from '@/components/CurrentVehicleCard'
+import Footer from '@/components/Footer'
+import { useMemo } from 'react'
+import dynamic from 'next/dynamic'
 
 const Dashboard = () => {
-    return (
-        <AppLayout
-            header={
-                <h2 className="font-semibold text-xl text-foreground leading-tight">
-                    Dashboard
-                </h2>
-            }
-        >
-            <Head>
-                <title>Laravel - Dashboard</title>
-            </Head>
+  const Map = useMemo(() => dynamic(
+    () => import('@/components/Map'),
+    {
+      loading: () => <p>A map is loading</p>,
+      ssr: false
+    }
+  ), [])
 
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-background overflow-hidden shadow-sm sm:rounded-lg border">
-                        <Welcome />
+  return (
+    <AppLayout>
+      <Head>
+        <title>Laravel - Dashboard</title>
+      </Head>
 
-                        <CarSection />
-                    </div>
-                </div>
-            </div>
-        </AppLayout>
-    )
+      <div className="p-2 relative">
+        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <div className="overflow-hidden shadow-sm sm:rounded-lg border p-2 z-20 relative bg-background/[0.75]">
+            <Welcome />
+            <CurrentVehicleCard />
+          </div>
+        </div>
+
+        <Map />
+      </div>
+      <Footer />
+    </AppLayout>
+  )
 }
 
 export default Dashboard

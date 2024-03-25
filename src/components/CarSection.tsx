@@ -62,7 +62,7 @@ const CarSection = () => {
                 <div className="mt-8 min-h-[250px]">
                     {!isImageLoaded ? (
                         <Skeleton className="absolute w-[400px] h-[200px] rounded-xl" />
-                    ): null}
+                    ) : null}
 
                     {car?.specs.model ? (
                         <Image

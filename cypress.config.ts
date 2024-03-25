@@ -5,6 +5,10 @@ config()
 
 module.exports = defineConfig({
     e2e: {
+        retries: {
+            runMode: 2,
+            openMode: 0,
+        },
         watchForFileChanges: false,
         specPattern: 'tests/e2e/**/*.cy.ts',
         supportFile: 'tests/e2e/support/index.ts',

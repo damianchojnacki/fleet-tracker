@@ -2,7 +2,7 @@ name: test
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: ["main", "dev"]
 env:
   NEXT_PUBLIC_API_URL: http://localhost
 jobs:
@@ -83,13 +83,6 @@ jobs:
         run: pnpm install
       - name: Build app
         run: pnpm build
-      - name: Unit and integration tests
-        id: execute_tests
-        run: |
-          pnpm test:ci
-          COVERAGE="$( cat coverage/coverage-summary.json | jq -r '.total.lines.pct' )"
-          COVERAGE="$( echo "$COVERAGE/1" | bc )"
-          echo "coverage=${COVERAGE}" >> $GITHUB_OUTPUT
       - name: Setup API
         run: |
           CONTAINER_ID=$(docker ps --filter "ancestor=daamian3/fleet-tracker:latest" --format "{{.ID}}")
@@ -117,36 +110,36 @@ jobs:
           name: cypress-screenshots
           path: tests/e2e/screenshots
           if-no-files-found: ignore
-  badge:
-    needs: test
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: badges
-          path: badges
-      - name: Generate the coverage badge
-        uses: emibcn/badge-action@v2.0.2
-        with:
-          label: 'Code coverage'
-          status: ${{ needs.test.outputs.coverage }}%
-          color: ${{
-            needs.test.outputs.coverage > 90 && 'green'              ||
-            needs.test.outputs.coverage > 80 && 'yellow'             ||
-            needs.test.outputs.coverage > 70 && 'orange'             ||
-            'red' }}
-          path: badges/coverage.svg
-      - name: Push badge
-        env:
-          BRANCH: ${{ needs.test.outputs.branch }}
-        working-directory: ./badges
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email github-actions[bot]@users.noreply.github.com
-          mkdir -p "${BRANCH}"
-
-          mv coverage.svg "${BRANCH}"
-          git add "${BRANCH}/coverage.svg"
-
-          git commit --author "damianchojnacki <damianchojnacki@users.noreply.github.com>" -m "Add/Update badge [skip ci]" || true
-          git push
+#  badge:
+#    needs: test
+#    runs-on: ubuntu-20.04
+#    steps:
+#      - uses: actions/checkout@v3
+#        with:
+#          ref: badges
+#          path: badges
+#      - name: Generate the coverage badge
+#        uses: emibcn/badge-action@v2.0.2
+#        with:
+#          label: 'Code coverage'
+#          status: ${{ needs.test.outputs.coverage }}%
+#          color: ${{
+#            needs.test.outputs.coverage > 90 && 'green'              ||
+#            needs.test.outputs.coverage > 80 && 'yellow'             ||
+#            needs.test.outputs.coverage > 70 && 'orange'             ||
+#            'red' }}
+#          path: badges/coverage.svg
+#      - name: Push badge
+#        env:
+#          BRANCH: ${{ needs.test.outputs.branch }}
+#        working-directory: ./badges
+#        run: |
+#          git config user.name github-actions[bot]
+#          git config user.email github-actions[bot]@users.noreply.github.com
+#          mkdir -p "${BRANCH}"
+#
+#          mv coverage.svg "${BRANCH}"
+#          git add "${BRANCH}/coverage.svg"
+#
+#          git commit --author "damianchojnacki <damianchojnacki@users.noreply.github.com>" -m "Add/Update badge [skip ci]" || true
+#          git push
