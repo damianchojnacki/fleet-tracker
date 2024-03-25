@@ -35,7 +35,7 @@ const CurrentVehicleCard = () => {
   return (
     <div className="w-full flex items-center justify-between">
       <div className="w-full flex items-center">
-        <div className="w-full md:w-auto bg-[#0f1729] p-2 rounded-lg flex flex-row justify-between md:justify-start items-center pr-0 overflow-hidden">
+        <div className="w-full md:w-auto bg-primary p-2 rounded-lg flex flex-row justify-between md:justify-start items-center pr-0 overflow-hidden">
           {carImageUrl ? (
             <img src={carImageUrl} alt="Vehicle" className="h-auto w-40 md:w-80 object-cover rounded-lg mr-0" />
           ) : null}
