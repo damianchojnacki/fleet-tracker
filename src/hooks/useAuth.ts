@@ -52,6 +52,7 @@ export const useAuth = ({
                 }
 
                 if(error.response?.status === 401) {
+                    // eslint-disable-next-line no-console
                     console.warn('Unauthenticated.')
                 }
 

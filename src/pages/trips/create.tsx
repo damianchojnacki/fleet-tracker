@@ -1,5 +1,4 @@
 import CurrentVehicleCard from '@/components/CurrentVehicleCard'
-import Footer from '@/components/Footer'
 import AppLayout from '@/components/Layouts/AppLayout'
 import { NewTripCard } from '@/components/NewTripCard'
 
@@ -12,7 +11,6 @@ const Dashboard = () => {
           <NewTripCard />
         </div>
       </div>
-      <Footer />
     </AppLayout>
   )
 }

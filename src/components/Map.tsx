@@ -35,7 +35,7 @@ const Map: React.FC = () => {
 
   return (
     <div className='my-3'>
-      <MapContainer center={[52.22, 21.01]} zoom={13} className="absolute top-0 left-0 h-[86vh] md:h-[92vh] w-full z-10" zoomControl={false}>
+      <MapContainer center={[52.22, 21.01]} zoom={13} className="absolute top-0 left-0 h-[calc(100vh-64px-80px)] xs:h-[calc(100vh-64px-56px)] w-full z-10" zoomControl={false}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

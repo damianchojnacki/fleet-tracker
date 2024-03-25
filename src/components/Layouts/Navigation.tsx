@@ -22,7 +22,7 @@ const Navigation = () => {
   const initials = `${user?.firstname.substring(0, 1).toUpperCase()}${user?.lastname.substring(0, 1).toUpperCase()}`
 
   return (
-    <nav className="bg-secondary border-b">
+    <nav className="bg-secondary">
       {/* Primary Navigation Menu */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
@@ -44,24 +44,32 @@ const Navigation = () => {
                 </button>
               }
             >
-              <DropdownMenuItem className="cursor-pointer">
-                <User className="mr-2 h-4 w-4" />
-                <Link href="/dashboard">Map</Link>
+              <DropdownMenuItem className="cursor-pointer" asChild={true}>
+                <Link href="/dashboard">
+                    <User className="mr-2 h-4 w-4" />
+                    Map
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <Navigation2 className="mr-2 h-4 w-4" />
-                <Link href="/trips">Trips</Link>
+              <DropdownMenuItem className="cursor-pointer" asChild={true}>
+                <Link href="/trips">
+                    <Navigation2 className="mr-2 h-4 w-4" />
+                    Trips
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <Car className="mr-2 h-4 w-4" />
-                <Link href="/cars">Cars</Link>
+              <DropdownMenuItem className="cursor-pointer" asChild={true}>
+                <Link href="/cars">
+                    <Car className="mr-2 h-4 w-4" />
+                    Cars
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <MessageCircle className="mr-2 h-4 w-4" />
-                <Link href="/support">Support</Link>
+              <DropdownMenuItem className="cursor-pointer" asChild={true}>
+                <Link href="/support">
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    Support
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={logout} className="cursor-pointer">
+              <DropdownMenuItem className="cursor-pointer" onClick={logout}>
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Logout</span>
               </DropdownMenuItem>

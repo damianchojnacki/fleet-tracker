@@ -1,5 +1,4 @@
 import CurrentVehicleCard from '@/components/CurrentVehicleCard'
-import Footer from '@/components/Footer'
 import AppLayout from '@/components/Layouts/AppLayout'
 import SelectVehicleCard from '@/components/SelectVehicleCard'
 import { useCar } from '@/hooks/useCar'
@@ -19,7 +18,6 @@ const AvailableCars = () => {
           )}
         </div>
       </div>
-      <Footer />
     </AppLayout>
   )
 }

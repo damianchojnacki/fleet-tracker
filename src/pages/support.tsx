@@ -2,7 +2,6 @@ import AppLayout from '@/components/Layouts/AppLayout'
 import Head from 'next/head'
 import Chat from '@/components/Chat'
 import CurrentVehicleCard from '@/components/CurrentVehicleCard'
-import Footer from '@/components/Footer'
 
 const Dashboard = () => {
   return (
@@ -19,7 +18,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </AppLayout>
   )
 }

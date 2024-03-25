@@ -2,6 +2,7 @@ import Navigation from '@/components/Layouts/Navigation'
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import Footer from '@/components/Footer'
 
 export interface AppLayoutProps {
   header?: React.ReactNode
@@ -19,7 +20,7 @@ const AppLayout = ({ header, children }: AppLayoutProps) => {
   }, [user])
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navigation />
 
       {/* Page Heading */}
@@ -33,6 +34,8 @@ const AppLayout = ({ header, children }: AppLayoutProps) => {
 
       {/* Page Content */}
       <main>{children}</main>
+
+      <Footer />
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import CurrentVehicleCard from '@/components/CurrentVehicleCard'
-import Footer from '@/components/Footer'
 import AppLayout from '@/components/Layouts/AppLayout'
 import TripsTable from '@/components/TripsTable'
 import Link from 'next/link'
@@ -24,7 +23,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </AppLayout >
   )
 }

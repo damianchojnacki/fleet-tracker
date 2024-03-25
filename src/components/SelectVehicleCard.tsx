@@ -26,8 +26,7 @@ const SelectVehicleCard = ({ car }: SelectCarCardProps) => {
   return (
     <div className="flex text-primary-foreground items-center border-b-2 border-secondary mt-2 min-w-full">
       <div className="p-2 rounded-lg flex flex-row items-center">
-        <img src={Car.imageUrl(car)} alt="Vehicle" className="h-auto w-40 md:w-60 object-cover rounded-lg "
-        />
+        <img src={Car.imageUrl(car)} alt="Vehicle" className="h-auto w-40 md:w-60 object-cover rounded-lg "/>
       </div>
       <div className='w-full flex flex-row justify-between items-center'>
         <div className="ml-4">

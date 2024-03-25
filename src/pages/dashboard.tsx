@@ -7,7 +7,6 @@ import Head from 'next/head'
 // import { dehydrate, QueryClient } from '@tanstack/react-query'
 import Welcome from '@/components/Welcome'
 import CurrentVehicleCard from '@/components/CurrentVehicleCard'
-import Footer from '@/components/Footer'
 import { useMemo } from 'react'
 import dynamic from 'next/dynamic'
 
@@ -36,7 +35,6 @@ const Dashboard = () => {
 
         <Map />
       </div>
-      <Footer />
     </AppLayout>
   )
 }
