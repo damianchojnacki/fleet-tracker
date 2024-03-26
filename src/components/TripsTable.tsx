@@ -19,7 +19,7 @@ export default function TripsTable() {
           <TableHead>Date</TableHead>
           <TableHead>Car</TableHead>
           <TableHead>Route</TableHead>
-          <TableHead className="hidden lg:table-cell">Note</TableHead>
+          <TableHead className="hidden md:table-cell">Note</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -29,7 +29,7 @@ export default function TripsTable() {
             <TableCell>{trip?.starts_at ? new Date(trip.starts_at).toLocaleDateString() : '-'}</TableCell>
             <TableCell className="capitalize">{`${trip.car.specs.plate_number} ${trip.car?.brand?.name} ${trip.car.specs.model}`}</TableCell>
             <TableCell>{`${trip.from} - ${trip.to}`}</TableCell>
-            <TableCell className="hidden lg:table-cell">{trip.note}</TableCell>
+            <TableCell className="hidden md:table-cell">{trip.note}</TableCell>
           </TableRow>
         ))) : null}
       </TableBody>

@@ -30,9 +30,7 @@ const SelectVehicleCard = ({ car }: SelectCarCardProps) => {
       </div>
       <div className='w-full flex flex-row justify-between items-center'>
         <div className="ml-4">
-          <h2 className="text-lg font-semibold
-          my-3 capitalize"
-          >{car.brand?.name} {car.specs.model}</h2>
+          <h2 className="text-lg font-semibold my-3 capitalize" data-cy="name">{car.brand?.name} {car.specs.model}</h2>
           <p className="text-sm my-1">Registration: {car.specs.plate_number}</p>
           <p className="text-sm my-1">Odometer: {car.mileage?.toLocaleString()} km</p>
         </div>
