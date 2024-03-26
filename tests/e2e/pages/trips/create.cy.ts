@@ -27,7 +27,7 @@ describe('Create Trip Page', () => {
 
         cy.wait('@trips')
 
-        cy.get(`td:contains(${day}.)`).should('be.visible')
+        cy.get(`td:contains(${day})`).should('be.visible')
         cy.get(`td:contains(${to})`).should('be.visible')
         cy.get(`td:contains(${from})`).should('be.visible')
         cy.get(`td:contains(${note})`).should('be.visible')
