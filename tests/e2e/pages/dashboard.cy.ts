@@ -3,7 +3,7 @@ describe('Dashboard Page', () => {
         cy.login()
         cy.visit('/dashboard')
 
-        cy.contains("Welcome").should('be.visible')
+        cy.contains('Welcome').should('be.visible')
         cy.url().should('include', '/dashboard')
     })
 
