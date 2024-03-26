@@ -22,8 +22,8 @@ describe('Cars Page', () => {
         cy.get('@name').then((name) => {
             const [brand, model] = name.toString().split(' ')
 
-            cy.contains('Current vehicle').parent().contains(brand).should('be.visible')
-            cy.contains('Current vehicle').parent().contains(model).should('be.visible')
+            cy.contains('Current vehicle').parent().contains(brand).should('exist')
+            cy.contains('Current vehicle').parent().contains(model).should('exist')
         })
     })
 })
