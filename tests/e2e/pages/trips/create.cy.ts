@@ -9,7 +9,7 @@ describe('Create Trip Page', () => {
 
         cy.get('button[id=starts_at]').click()
 
-        const day = Math.round(Math.random() * 20) + 1
+        const day = Math.round(Math.random() * 10) + 10
         const from = randomString(10)
         const to = randomString(10)
         const note = randomString(10)
