@@ -19,6 +19,7 @@ module.exports = defineConfig({
         baseUrl: 'http://localhost:3000',
         env: {
             apiUrl: process.env.NEXT_PUBLIC_API_URL,
+            apiSecret: process.env.API_SECRET,
         },
     },
 })

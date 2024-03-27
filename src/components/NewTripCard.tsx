@@ -86,7 +86,7 @@ export function NewTripCard() {
 
             <div className="col-span-3 md:col-span-4 grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <DatePickerDemo date={startsAt} setDate={setStartsAt} />
+                <DatePickerDemo date={startsAt} setDate={setStartsAt} id="starts_at" />
               </div>
               <div className="flex flex-col space-y-1.5 ">
                 <Input id="from" placeholder="Point of origin" name="from" className="border-secondary" onChange={(e) => setFrom(e.target.value)} />

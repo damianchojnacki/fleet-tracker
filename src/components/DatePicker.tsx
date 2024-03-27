@@ -16,13 +16,15 @@ import {
 export interface DatePickerProps {
   date: Date,
   setDate: (date: Date) => void
+  id?: string
 }
 
-export function DatePickerDemo({ date, setDate }: DatePickerProps) {
+export function DatePickerDemo({ date, setDate, id }: DatePickerProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
+          id={id}
           variant={'outline'}
           className={cn(
             'justify-start text-left font-normal border-secondary',
