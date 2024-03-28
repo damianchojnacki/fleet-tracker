@@ -1,4 +1,5 @@
-export default interface TripPoint {
-  lat: number
-  lng: number
+export default interface TripPoint
+{
+    lat: number
+    lng: number
 }

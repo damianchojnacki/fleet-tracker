@@ -1,4 +1,4 @@
-import "@/styles/global.css"
+import '@/styles/global.css'
 
 /** @type { import('@storybook/react').Preview } */
 const preview = {

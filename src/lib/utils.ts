@@ -4,18 +4,20 @@ import axios from '@/lib/axios'
 import { IncomingMessage } from 'http'
 import { NextApiRequestCookies } from 'next/dist/server/api-utils'
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+export function cn(...inputs: ClassValue[])
+{
+    return twMerge(clsx(inputs))
 }
 
 type NextRequest = IncomingMessage & {
     cookies: NextApiRequestCookies
 }
 
-export function authorize(req: NextRequest) {
+export function authorize(req: NextRequest)
+{
     const { token } = req.cookies
 
-    if(!token) {
+    if (!token) {
         delete axios.defaults.headers.common['Authorization']
 
         return

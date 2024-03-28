@@ -4,22 +4,22 @@ import Chat from '@/components/Chat'
 import CurrentVehicleCard from '@/components/CurrentVehicleCard'
 
 const Dashboard = () => {
-  return (
-    <AppLayout header={null}>
-      <Head>
-        <title>FleetTracker - Support</title>
-      </Head>
+    return (
+        <AppLayout header={null}>
+            <Head>
+                <title>FleetTracker - Support</title>
+            </Head>
 
-      <div className="py-12 px-1">
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <CurrentVehicleCard />
-          <div className="bg-background overflow-hidden shadow-sm sm:rounded-lg border mt-3">
-            <Chat />
-          </div>
-        </div>
-      </div>
-    </AppLayout>
-  )
+            <div className='py-12 px-1'>
+                <div className='max-w-7xl mx-auto sm:px-6 lg:px-8'>
+                    <CurrentVehicleCard />
+                    <div className='bg-background overflow-hidden shadow-sm sm:rounded-lg border mt-3'>
+                        <Chat />
+                    </div>
+                </div>
+            </div>
+        </AppLayout>
+    )
 }
 
 export default Dashboard

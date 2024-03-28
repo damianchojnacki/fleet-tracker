@@ -18,10 +18,23 @@
         "no-console": "warn",
         "no-nested-ternary": "off",
         "no-underscore-dangle": "off",
-        "no-unused-expressions": ["error", { "allowTernary": true }],
+        "no-unused-expressions": [
+            "error",
+            {
+                "allowTernary": true
+            }
+        ],
         "camelcase": "off",
         "react/self-closing-comp": 1,
-        "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ]
+            }
+        ],
         "react/prop-types": "off",
         "react/destructuring-assignment": "off",
         "react/jsx-no-comment-textnodes": "off",
@@ -29,12 +42,33 @@
         "react/no-array-index-key": "off",
         "react/require-default-props": "off",
         "react/react-in-jsx-scope": "off",
-        "linebreak-style": ["error", "unix"],
-        "semi": ["error", "never"],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "semi": [
+            "error",
+            "never"
+        ],
         "@typescript-eslint/no-explicit-any": "warn",
-        "react/jsx-closing-bracket-location": ["warn"],
-        "object-curly-spacing": ["warn", "always", { "arraysInObjects": false, "objectsInObjects": true }],
-        "quotes": ["warn", "single", { "avoidEscape": true }]
+        "react/jsx-closing-bracket-location": [
+            "warn"
+        ],
+        "object-curly-spacing": [
+            "warn",
+            "always",
+            {
+                "arraysInObjects": false,
+                "objectsInObjects": true
+            }
+        ],
+        "quotes": [
+            "warn",
+            "single",
+            {
+                "avoidEscape": true
+            }
+        ]
     },
     "overrides": [
         // Only uses Testing Library lint rules in test files
@@ -46,7 +80,9 @@
             "env": {
                 "jest": true
             },
-            "plugins": ["jest-dom"],
+            "plugins": [
+                "jest-dom"
+            ],
             "extends": [
                 "plugin:testing-library/react",
                 "plugin:jest-dom/recommended"

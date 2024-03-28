@@ -21,7 +21,8 @@ import { deleteCookie, setCookie } from 'cookies-next'
 import { useQuery } from '@tanstack/react-query'
 import UserType from '@/types/Models/User'
 
-export interface useAuthProps {
+export interface useAuthProps
+{
     middleware?: 'guest' | 'auth'
     redirectIfAuthenticated?: string
 }
@@ -35,7 +36,7 @@ export const useAuth = ({
     const { toast } = useToast()
 
     const [errors, setErrors] = useState<ErrorBag>({})
-    const [status, setStatus] = useState<string|null>(null)
+    const [status, setStatus] = useState<string | null>(null)
 
     const { data: user, error, refetch: mutate } = useQuery<UserType | null, AxiosError>({
         queryKey: [User.showPath],
@@ -54,7 +55,7 @@ export const useAuth = ({
                     return null
                 }
 
-                if(error.response?.status === 401) {
+                if (error.response?.status === 401) {
                     // eslint-disable-next-line no-console
                     console.warn('Unauthenticated.')
                 }
@@ -64,7 +65,7 @@ export const useAuth = ({
     })
 
     useEffect(() => {
-        if(error?.response?.data.errors) {
+        if (error?.response?.data.errors) {
             setErrors(error?.response?.data.errors)
         }
     }, [error])
@@ -200,7 +201,7 @@ export const useAuth = ({
     }
 
     useEffect(() => {
-        if (middleware === 'guest' && redirectIfAuthenticated && user){
+        if (middleware === 'guest' && redirectIfAuthenticated && user) {
             router.push(redirectIfAuthenticated)
         }
 

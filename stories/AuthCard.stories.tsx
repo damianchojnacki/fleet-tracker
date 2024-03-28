@@ -24,57 +24,57 @@ type Story = StoryObj<typeof AuthCard>;
 export const LoginForm: Story = {
     args: {
         logo: (
-            <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
+            <ApplicationLogo className='w-20 h-20 fill-current text-gray-500' />
         ),
         children: (
             <form>
                 {/* Email Address */}
                 <div>
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor='email'>Email</Label>
 
                     <Input
-                        id="email"
-                        type="email"
-                        className="block mt-1 w-full"
+                        id='email'
+                        type='email'
+                        className='block mt-1 w-full'
                         required
                         autoFocus
-                        defaultValue="user@example.com"
+                        defaultValue='user@example.com'
                     />
 
                     <Input
-                        id="password"
-                        type="password"
-                        className="block mt-1 w-full"
+                        id='password'
+                        type='password'
+                        className='block mt-1 w-full'
                         required
                         autoFocus
-                        defaultValue="password"
+                        defaultValue='password'
                     />
-                    <div className="flex items-center justify-end mt-4">
+                    <div className='flex items-center justify-end mt-4'>
                         <Button>Log in</Button>
                     </div>
                 </div>
             </form>
-        )
+        ),
     },
     render: (args) => (
-        <div className="h-screen flex flex-grow">
+        <div className='h-screen flex flex-grow'>
             <AuthCard {...args}>
                 {args.children}
             </AuthCard>
         </div>
-    )
+    ),
 }
 
 export const Empty: Story = {
     args: {
         logo: 'Logo',
-        children: 'Form'
+        children: 'Form',
     },
     render: (args) => (
-        <div className="h-screen flex flex-grow">
+        <div className='h-screen flex flex-grow'>
             <AuthCard {...args}>
                 {args.children}
             </AuthCard>
         </div>
-    )
+    ),
 }

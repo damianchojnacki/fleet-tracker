@@ -11,7 +11,7 @@ export const useTrip = () => {
     })
 
     return {
-      trips,
-      refresh: mutate,
+        trips,
+        refresh: mutate,
     }
 }
