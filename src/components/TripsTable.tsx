@@ -28,7 +28,7 @@ export default function TripsTable() {
             <TableCell className="hidden md:table-cell">{i + 1}</TableCell>
             <TableCell>{trip?.starts_at ? new Date(trip.starts_at).toLocaleDateString() : '-'}</TableCell>
             <TableCell className="capitalize">{`${trip.car.specs.plate_number} ${trip.car?.brand?.name} ${trip.car.specs.model}`}</TableCell>
-            <TableCell>{`${trip.from} - ${trip.to}`}</TableCell>
+            <TableCell>{`${trip.from ?? ''} - ${trip.to ?? ''}`}</TableCell>
             <TableCell className="hidden md:table-cell">{trip.note}</TableCell>
           </TableRow>
         ))) : null}

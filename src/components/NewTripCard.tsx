@@ -12,13 +12,15 @@ import { Input } from '@/components/ui/input'
 import { DatePickerDemo } from '@/components/DatePicker'
 import Link from 'next/link'
 import Trip from '@/lib/api/Trip'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { useCar } from '@/hooks/useCar'
 import { useToast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/router'
+import { useTrip } from '@/hooks/useTrip'
 
 export function NewTripCard() {
   const { car } = useCar()
+  const {refresh} = useTrip()
 
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
@@ -28,7 +30,7 @@ export function NewTripCard() {
   const { toast } = useToast()
   const router = useRouter()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
     if (!car) {
@@ -44,7 +46,9 @@ export function NewTripCard() {
         starts_at: startsAt.toISOString(),
       })
 
-      router.push('/trips')
+      refresh()
+
+      await router.push('/trips')
     } catch (error) {
       if (error.response?.data?.message) {
         toast({
