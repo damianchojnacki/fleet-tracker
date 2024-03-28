@@ -18,9 +18,11 @@ const SelectVehicleCard = ({ car }: SelectCarCardProps) => {
 
   const selectCar = async () => {
     await Car.select(car.id)
-    await refreshAuth()
-    await refreshAvailableCars()
-    router.push('/dashboard')
+
+    refreshAuth()
+    refreshAvailableCars()
+
+    await router.push('/dashboard')
   }
 
   return (
