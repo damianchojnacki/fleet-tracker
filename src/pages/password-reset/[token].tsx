@@ -15,13 +15,11 @@ import ErrorBag from '@/types/ErrorBag'
 const PasswordReset = () => {
   const router = useRouter()
 
-  const { resetPassword } = useAuth({ middleware: 'guest' })
+  const { resetPassword, errors, status } = useAuth({ middleware: 'guest' })
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
-  const [errors, setErrors] = useState<ErrorBag>({})
-  const [status, setStatus] = useState<string | null>(null)
 
   const submitForm = event => {
     event.preventDefault()
@@ -29,9 +27,7 @@ const PasswordReset = () => {
     resetPassword({
       email,
       password,
-      password_confirmation: passwordConfirmation,
-      setErrors,
-      setStatus,
+      password_confirmation: passwordConfirmation
     })
   }
 

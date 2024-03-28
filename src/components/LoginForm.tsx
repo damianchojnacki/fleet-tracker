@@ -17,11 +17,10 @@ import { useToast } from '@/components/ui/use-toast'
 import { Checkbox } from '@/components/ui/checkbox'
 import InputError from '@/components/InputError'
 
-
 function LoginForm() {
   const router = useRouter()
 
-  const { login } = useAuth({
+  const { login, errors } = useAuth({
     middleware: 'guest',
     redirectIfAuthenticated: '/dashboard',
   })
@@ -29,7 +28,6 @@ function LoginForm() {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [shouldRemember, setShouldRemember] = React.useState(false)
-  const [errors, setErrors] = React.useState<ErrorBag>({})
 
   const { toast } = useToast()
 
@@ -53,7 +51,6 @@ function LoginForm() {
       email,
       password,
       remember: shouldRemember,
-      setErrors,
     })
   }
 

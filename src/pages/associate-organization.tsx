@@ -7,7 +7,7 @@ import InputError from '@/components/InputError'
 import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
-import { useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import Organization from '@/lib/api/Organization'
 import { useToast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/router'
@@ -70,7 +70,7 @@ const AssociateOrganization = () => {
     })()
   }, [router.query])
 
-  const submitForm = async (event) => {
+  const submitForm = async (event: FormEvent) => {
     event.preventDefault()
 
     try {

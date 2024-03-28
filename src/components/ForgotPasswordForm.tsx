@@ -11,10 +11,8 @@ import AuthSessionStatus from '@/components/AuthSessionStatus'
 
 function ForgotPasswordForm() {
   const [email, setEmail] = useState('')
-  const [errors, setErrors] = useState<ErrorBag>({})
-  const [status, setStatus] = useState<string | null>(null)
 
-  const { forgotPassword: submit } = useAuth({
+  const { forgotPassword: submit, errors, status } = useAuth({
     middleware: 'guest',
     redirectIfAuthenticated: '/dashboard',
   })
@@ -26,7 +24,7 @@ function ForgotPasswordForm() {
         return
     }
 
-    await submit({ email, setErrors, setStatus })
+    await submit({ email })
   }
 
   return (

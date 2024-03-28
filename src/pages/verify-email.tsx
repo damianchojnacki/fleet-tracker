@@ -4,16 +4,14 @@ import { Button } from '@/components/ui/button'
 import GuestLayout from '@/components/Layouts/GuestLayout'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 const VerifyEmail = () => {
-    const { logout, resendEmailVerification, verifyEmail } = useAuth({
+    const { logout, resendEmailVerification, verifyEmail, status } = useAuth({
         middleware: 'auth',
         redirectIfAuthenticated: '/dashboard',
     })
-
-    const [status, setStatus] = useState<string|null>(null)
 
     const { query } = useRouter()
 
@@ -50,7 +48,7 @@ const VerifyEmail = () => {
                         </div>
                     ) : (
                         <Button
-                            onClick={() => resendEmailVerification({ setStatus })}
+                            onClick={() => resendEmailVerification()}
                         >
                             Resend Verification Email
                         </Button>

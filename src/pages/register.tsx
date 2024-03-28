@@ -8,10 +8,9 @@ import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { useState } from 'react'
-import ErrorBag from '@/types/ErrorBag'
 
 const Register = () => {
-    const { register } = useAuth({
+    const { register, errors } = useAuth({
         middleware: 'guest',
         redirectIfAuthenticated: '/dashboard',
     })
@@ -21,9 +20,8 @@ const Register = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
-    const [errors, setErrors] = useState<ErrorBag>({})
 
-    const submitForm = event => {
+    const submitForm = (event) => {
         event.preventDefault()
 
         register({
@@ -32,7 +30,6 @@ const Register = () => {
             email,
             password,
             password_confirmation: passwordConfirmation,
-            setErrors,
         })
     }
 
