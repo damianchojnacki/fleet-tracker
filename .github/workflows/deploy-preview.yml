@@ -6,7 +6,7 @@ on:
     branches-ignore: [main]
   workflow_dispatch:
 concurrency:
-  group: "production"
+  group: "preview"
   cancel-in-progress: false
 env:
   VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
