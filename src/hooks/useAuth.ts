@@ -1,5 +1,5 @@
 import axios from '@/lib/axios'
-import { Dispatch, SetStateAction, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import User from '@/lib/api/User'
 import RegisterPayload from '@/types/Payloads/RegisterPayload'
@@ -21,7 +21,8 @@ import { deleteCookie, setCookie } from 'cookies-next'
 import { useQuery } from '@tanstack/react-query'
 import UserType from '@/types/Models/User'
 
-export interface useAuthProps {
+export interface useAuthProps
+{
     middleware?: 'guest' | 'auth'
     redirectIfAuthenticated?: string
 }
@@ -33,6 +34,9 @@ export const useAuth = ({
     const router = useRouter()
 
     const { toast } = useToast()
+
+    const [errors, setErrors] = useState<ErrorBag>({})
+    const [status, setStatus] = useState<string | null>(null)
 
     const { data: user, error, refetch: mutate } = useQuery<UserType | null, AxiosError>({
         queryKey: [User.showPath],
@@ -51,7 +55,7 @@ export const useAuth = ({
                     return null
                 }
 
-                if(error.response?.status === 401) {
+                if (error.response?.status === 401) {
                     // eslint-disable-next-line no-console
                     console.warn('Unauthenticated.')
                 }
@@ -59,6 +63,12 @@ export const useAuth = ({
                 throw error
             }),
     })
+
+    useEffect(() => {
+        if (error?.response?.data.errors) {
+            setErrors(error?.response?.data.errors)
+        }
+    }, [error])
 
     const handleResponseError = (error: AxiosError) => {
         if (error.response?.data?.message || error.message) {
@@ -76,9 +86,7 @@ export const useAuth = ({
         throw error
     }
 
-    type setErrors = { setErrors: Dispatch<SetStateAction<ErrorBag>> }
-
-    const register = async ({ setErrors, ...props }: RegisterPayload & setErrors) => {
+    const register = async ({ ...props }: RegisterPayload) => {
         setErrors({})
 
         axios
@@ -97,9 +105,7 @@ export const useAuth = ({
             })
     }
 
-    type setStatus = { setStatus: Dispatch<SetStateAction<string|null>> }
-
-    const login = async ({ setErrors, ...props }: LoginPayload & setErrors) => {
+    const login = async ({ ...props }: LoginPayload) => {
         setErrors({})
 
         axios
@@ -122,7 +128,7 @@ export const useAuth = ({
             })
     }
 
-    const forgotPassword = async ({ setErrors, setStatus, email }: ForgotPasswordPayload & setErrors & setStatus) => {
+    const forgotPassword = async ({ email }: ForgotPasswordPayload) => {
         setErrors({})
         setStatus(null)
 
@@ -140,7 +146,7 @@ export const useAuth = ({
             })
     }
 
-    const resetPassword = async ({ setErrors, setStatus, ...props }: ResetPasswordPayload & setErrors & setStatus) => {
+    const resetPassword = async ({ ...props }: ResetPasswordPayload) => {
         setErrors({})
         setStatus(null)
 
@@ -160,7 +166,7 @@ export const useAuth = ({
             })
     }
 
-    const resendEmailVerification = ({ setStatus }: setStatus) => {
+    const resendEmailVerification = () => {
         axios
             .post<ResendEmailVerificationResponse>('/api/email/verification-notification')
             .then(response => setStatus(response.data.status))
@@ -195,7 +201,7 @@ export const useAuth = ({
     }
 
     useEffect(() => {
-        if (middleware === 'guest' && redirectIfAuthenticated && user){
+        if (middleware === 'guest' && redirectIfAuthenticated && user) {
             router.push(redirectIfAuthenticated)
         }
 
@@ -222,5 +228,7 @@ export const useAuth = ({
         verifyEmail,
         logout,
         refresh: mutate,
+        errors,
+        status,
     }
 }

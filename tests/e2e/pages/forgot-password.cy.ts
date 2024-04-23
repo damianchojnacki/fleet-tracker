@@ -39,7 +39,7 @@ describe('Forgot Password Page', () => {
         cy.get('form').submit()
 
         // Verify that an error message is displayed for the email field
-        cy.contains("We can't find a user with that email address.").should('be.visible')
+        cy.contains('We can\'t find a user with that email address.').should('be.visible')
     })
 
     // it('should display an error message for a too many attempts', () => {

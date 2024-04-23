@@ -2,9 +2,10 @@ name: test
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main", "dev"]
+    branches: [ "main", "dev" ]
 env:
   NEXT_PUBLIC_API_URL: http://localhost
+  API_SECRET: 409062bd00f8a392e24327035d75743df8199fd2
 jobs:
   # Build job
   test:
@@ -29,6 +30,7 @@ jobs:
           QUEUE_CONNECTION: sync
           TELESCOPE_ENABLED: false
           LOG_CHANNEL: stderr
+          API_SECRET: ${{ env.API_SECRET }}
       mariadb:
         image: mariadb:10
         env:
@@ -40,7 +42,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        node-version: [18]
+        node-version: [ 18 ]
     outputs:
       branch: ${{ steps.extract_branch.outputs.branch }}
       coverage: ${{ steps.execute_tests.outputs.coverage }}

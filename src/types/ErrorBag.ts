@@ -1,3 +1,3 @@
-type ErrorBag = {[p: string]: string[]}
+type ErrorBag = { [p: string]: string[] }
 
 export default ErrorBag

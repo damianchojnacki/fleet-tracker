@@ -14,7 +14,7 @@ const ChatInput = () => {
     const { toast } = useToast()
 
     const handleSend = async () => {
-        if(!user) {
+        if (!user) {
             return
         }
 
@@ -25,7 +25,7 @@ const ChatInput = () => {
             })
 
             refresh()
-        } catch(error) {
+        } catch (error) {
             if (error.response?.data?.message) {
                 toast({
                     variant: 'destructive',
@@ -41,21 +41,21 @@ const ChatInput = () => {
     }
 
     return (
-        <div className="flex gap-2 p-4 whitespace-pre-wrap items-center">
+        <div className='flex gap-2 p-4 whitespace-pre-wrap items-center'>
             <Textarea
-                autoComplete="off"
+                autoComplete='off'
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                name="message"
-                placeholder="Aa"
-                className="w-full border rounded-full flex items-center min-h-10 h-10 resize-none overflow-hidden bg-background"
+                name='message'
+                placeholder='Aa'
+                className='w-full border rounded-full flex items-center min-h-10 h-10 resize-none overflow-hidden bg-background'
             />
             <Link
-                href="#"
+                href='#'
                 className={`${message.length > 3 ? 'translate-x-0 w-auto' : 'translate-x-10 w-0'} ml-2 transition duration-300 dark:text-muted-foreground dark:hover:text-white shrink-0`}
                 onClick={handleSend}
             >
-                <SendHorizontal size={20} className="text-muted-foreground" />
+                <SendHorizontal size={20} className='text-muted-foreground' />
             </Link>
         </div>
     )

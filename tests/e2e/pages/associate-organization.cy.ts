@@ -1,5 +1,3 @@
-import { randomString } from '../support'
-
 describe('Associate Organization Page', () => {
     it('should display the Associate Organization page correctly', () => {
         cy.login()

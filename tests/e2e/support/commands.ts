@@ -12,6 +12,7 @@ Cypress.Commands.add('login', (email = 'user@example.com', password = 'password'
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            'Secret': Cypress.env('apiSecret'),
         },
     }).then((response) => setCookie('token', response.body.token))
 })

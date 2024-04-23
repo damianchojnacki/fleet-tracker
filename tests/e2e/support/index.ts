@@ -1,18 +1,23 @@
 import './e2e'
 
-export interface LoginResponse {
+export interface LoginResponse
+{
     token: string;
 }
 
-declare global {
+declare global
+{
     // eslint-disable-next-line @typescript-eslint/no-namespace
-    namespace Cypress {
-        interface Chainable {
+    namespace Cypress
+    {
+        interface Chainable
+        {
             /**
              * Custom command to select DOM element by data-cy attribute.
              * @example cy.dataCy('greeting')
              */
             login(email?: string, password?: string): Chainable<Response<LoginResponse>>
+
             getCy(
                 value: string,
             ): Chainable<JQuery<HTMLElementTagNameMap[keyof HTMLElementTagNameMap]>>
@@ -25,7 +30,8 @@ export const randomString = (length: number) => {
 
     window.crypto.getRandomValues(arr)
 
-    function decToHex(dec: number) {
+    function decToHex(dec: number)
+    {
         return dec.toString(16)
     }
 

@@ -1,7 +1,8 @@
 import { FC, InputHTMLAttributes } from 'react'
 
 interface InputErrorProps
-    extends Pick<InputHTMLAttributes<HTMLInputElement>, never> {
+    extends Pick<InputHTMLAttributes<HTMLInputElement>, never>
+{
     messages?: string[]
     className?: string
 }
